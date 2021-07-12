@@ -14,10 +14,10 @@
 	} from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 	import { onMount } from 'svelte';
+	import { setPlanets } from './planetLoader';
+	import { scaledDistances } from './scaledDistances';
 
-	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 	let canvas;
-
 	const solarSystemObjectPaths: string[] = [
 		'assets/models/sun.glb',
 		'assets/models/mercury.glb',
@@ -31,6 +31,8 @@
 		'assets/models/neptune.glb'
 	];
 
+	const [mercuryStartX, venusStartX] = [...scaledDistances];
+
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 100000);
 	const light = new AmbientLight('white');
@@ -38,28 +40,13 @@
 	const axes = new AxesHelper(30000);
 
 	// const clock = new Clock(true);
-	const space = new TextureLoader().load('assets/images/milky-way.jpg');
+	// const space = new TextureLoader().load('assets/images/milky-way.jpg');
 	scene.add(light);
 	// scene.add(grid);
 	scene.add(axes);
 
-	scene.background = space;
+	// scene.background = space;
 	camera.position.setZ(3000);
-
-	const gltfLoader = new GLTFLoader();
-
-	const loadModel = async (url) => {
-		return await gltfLoader.loadAsync(url);
-	};
-
-	const setPlanets = async () => {
-		return await Promise.all(
-			solarSystemObjectPaths.map(async (path) => {
-				const i = await loadModel(path);
-				return i;
-			})
-		);
-	};
 
 	light.position.set(100, 1000, 100);
 
@@ -71,49 +58,59 @@
 	// mesh.rotateX(20);
 	// mesh.rotateZ(0);
 	// mesh.rotateY(0);
+	const planetConfig = (planet, startX: number): any[] => {
+		const dTheta = (2 * Math.PI) / startX;
+		const theta = 0;
+		planet.scene.position.x = startX;
+		return [planet, dTheta, theta];
+	};
 	onMount(async () => {
-		const [
-			sun,
-			mercury
-			// venus,
-			// earth,
-			// moon,
-			// mars,
-			// jupiter,
-			// saturn,
-			// uranus,
-			// neptune
-		] = await setPlanets();
+		const planets = await setPlanets(solarSystemObjectPaths);
 
 		const renderer = new WebGLRenderer({
 			canvas: canvas
 		});
+		console.log(planets);
 
-		mercury.scene.position.x = 3000;
+		let mercuryTheta, mercuryDTheta, venusDTheta, venusTheta;
+
+		[mercury, mercuryDTheta, mercuryTheta] = [...planetConfig(mercury, mercuryStartX)];
+		[venus, venusDTheta, venusTheta] = [...planetConfig(venus, venusStartX)];
+		venus.scene.position.x = venusStartX;
 		sun.scene.scale.x = 1;
 		sun.scene.scale.y = 1;
 		sun.scene.scale.z = 1;
 
 		scene.add(sun.scene);
 		scene.add(mercury.scene);
+		scene.add(venus.scene);
 
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		new OrbitControls(camera, renderer.domElement);
-		const dTheta = (2 * Math.PI) / 1000;
-		let theta = 0;
+
 		function animate() {
 			requestAnimationFrame(animate);
 			sun.scene.rotation.y += 0.0005;
 			mercury.scene.rotation.y += 0.009;
 
-			[mercury.scene.position.x, mercury.scene.position.z, theta] = calcOrbit(3000, theta, dTheta);
+			[mercury.scene.position.x, mercury.scene.position.z, mercuryTheta] = calcOrbit(
+				mercuryStartX,
+				mercuryTheta,
+				mercuryDTheta
+			);
+
+			[venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
+				venusStartX,
+				venusTheta,
+				venusDTheta
+			);
 			renderer.render(scene, camera);
 		}
 		animate();
 	});
 
-	const calcOrbit = (startX, theta, dTheta) => {
+	const calcOrbit = (startX: number, theta: number, dTheta: number) => {
 		theta += dTheta;
 
 		const x = startX * Math.cos(theta);

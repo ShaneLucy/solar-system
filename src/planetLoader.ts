@@ -1,4 +1,5 @@
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import type { Planet } from './global';
 
 const gltfLoader = new GLTFLoader();
 
@@ -10,22 +11,15 @@ const getPlanetName = (path: string): string => {
 	return path.split('\\').pop().split('/').pop();
 };
 
-// interface p {
-// 	[key: string]: {
-// 		data: Promise<GLTF>;
-// 	};
-// }
-
-export const setPlanets = async (planetPaths: string[]): any => {
+export const setPlanets = async (planetPaths: Array<string>): Promise<Array<Planet>> => {
 	return await Promise.all(
 		planetPaths.map(async (path) => {
 			const planetData = await loadModel(path);
 			const planetName = getPlanetName(path).split('.').shift();
 
 			return {
-				[`${planetName}`]: {
-					data: planetData
-				}
+				data: planetData,
+				name: planetName
 			};
 		})
 	);

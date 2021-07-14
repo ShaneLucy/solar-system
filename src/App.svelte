@@ -16,6 +16,7 @@
 	import { onMount } from 'svelte';
 	import { setPlanets } from './planetLoader';
 	import { scaledDistances } from './scaledDistances';
+	import { config } from './config';
 
 	let canvas;
 	const solarSystemObjectPaths: string[] = [
@@ -34,7 +35,7 @@
 	const [mercuryStartX, venusStartX] = [...scaledDistances];
 
 	const scene = new Scene();
-	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 100000);
+	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 4500000);
 	const light = new AmbientLight('white');
 	const grid = new GridHelper(100000, 100, 'white', 'white');
 	const axes = new AxesHelper(30000);
@@ -65,25 +66,29 @@
 		return [planet, dTheta, theta];
 	};
 	onMount(async () => {
-		const planets = await setPlanets(solarSystemObjectPaths);
+		// const planets = await setPlanets(solarSystemObjectPaths);
 
 		const renderer = new WebGLRenderer({
 			canvas: canvas
 		});
-		console.log(planets);
+		const planets = await config();
 
-		let mercuryTheta, mercuryDTheta, venusDTheta, venusTheta;
+		// console.log(configPlanets());
 
-		[mercury, mercuryDTheta, mercuryTheta] = [...planetConfig(mercury, mercuryStartX)];
-		[venus, venusDTheta, venusTheta] = [...planetConfig(venus, venusStartX)];
-		venus.scene.position.x = venusStartX;
-		sun.scene.scale.x = 1;
-		sun.scene.scale.y = 1;
-		sun.scene.scale.z = 1;
+		planets.forEach((planet, index) => {
+			scene.add(planets[index].data.scene);
+		});
 
-		scene.add(sun.scene);
-		scene.add(mercury.scene);
-		scene.add(venus.scene);
+		// [mercury, mercuryDTheta, mercuryTheta] = [...planetConfig(mercury, mercuryStartX)];
+		// [venus, venusDTheta, venusTheta] = [...planetConfig(venus, venusStartX)];
+		// venus.scene.position.x = venusStartX;
+		// sun.scene.scale.x = 1;
+		// sun.scene.scale.y = 1;
+		// sun.scene.scale.z = 1;
+
+		// scene.add(sun.scene);
+		// scene.add(mercury.scene);
+		// scene.add(venus.scene);
 
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
@@ -91,20 +96,20 @@
 
 		function animate() {
 			requestAnimationFrame(animate);
-			sun.scene.rotation.y += 0.0005;
-			mercury.scene.rotation.y += 0.009;
+			// sun.scene.rotation.y += 0.0005;
+			// mercury.scene.rotation.y += 0.009;
 
-			[mercury.scene.position.x, mercury.scene.position.z, mercuryTheta] = calcOrbit(
-				mercuryStartX,
-				mercuryTheta,
-				mercuryDTheta
-			);
+			// [mercury.scene.position.x, mercury.scene.position.z, mercuryTheta] = calcOrbit(
+			// 	mercuryStartX,
+			// 	mercuryTheta,
+			// 	mercuryDTheta
+			// );
 
-			[venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
-				venusStartX,
-				venusTheta,
-				venusDTheta
-			);
+			// [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
+			// 	venusStartX,
+			// 	venusTheta,
+			// 	venusDTheta
+			// );
 			renderer.render(scene, camera);
 		}
 		animate();

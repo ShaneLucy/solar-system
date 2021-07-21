@@ -13,8 +13,7 @@ const solarSystemObjectPaths = [
 	'assets/models/jupiter.glb',
 	'assets/models/saturn.glb',
 	'assets/models/uranus.glb',
-	'assets/models/neptune.glb',
-	'assets/models/ddd.glb'
+	'assets/models/neptune.glb'
 ];
 
 /**

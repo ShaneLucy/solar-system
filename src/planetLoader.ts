@@ -1,10 +1,15 @@
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import type { Planet } from './global';
+import { errors } from './store';
 
 const gltfLoader = new GLTFLoader();
 
 const loadModel = async (url: string): Promise<GLTF> => {
-	return await gltfLoader.loadAsync(url);
+	try {
+		return await gltfLoader.loadAsync(url);
+	} catch (error) {
+		errors.update((val) => [...val, error]);
+	}
 };
 
 const getPlanetName = (path: string): string => {

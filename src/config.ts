@@ -1,6 +1,7 @@
 import { setPlanetDistances, setPlanetScales } from './scaling';
 import { setPlanets } from './planetLoader';
 import type { Planet } from './global';
+import { loadingMessage } from './store';
 
 const solarSystemObjectPaths = [
 	'assets/models/sun.glb',
@@ -12,7 +13,8 @@ const solarSystemObjectPaths = [
 	'assets/models/jupiter.glb',
 	'assets/models/saturn.glb',
 	'assets/models/uranus.glb',
-	'assets/models/neptune.glb'
+	'assets/models/neptune.glb',
+	'assets/models/ddd.glb'
 ];
 
 /**
@@ -37,5 +39,11 @@ const setThetas = (planets: Array<Planet>): Array<Planet> => {
  * Returns the completed planet object
  */
 export const config = async (): Promise<Array<Planet>> => {
-	return setThetas(setPlanetScales(setPlanetDistances(await configPlanets())));
+	const planets = await configPlanets();
+	loadingMessage.set('Scaling the solar system');
+
+	const scaledPlanets = setPlanetScales(setPlanetDistances(planets));
+	loadingMessage.set('Calculating Orbits');
+
+	return setThetas(scaledPlanets);
 };

@@ -10,12 +10,17 @@
 		MeshBasicMaterial,
 		GridHelper,
 		Mesh,
-		AxesHelper
+		AxesHelper,
+		SphereGeometry,
+		MeshStandardMaterial,
+		MathUtils
 	} from 'three';
 	import { MapControls, OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 	import { onMount } from 'svelte';
 	import { calcOrbit } from './calculations';
 	import { config } from './config';
+	import { errors, loadingMessage } from './store';
+	import { get } from 'svelte/store';
 
 	let canvas;
 
@@ -51,7 +56,11 @@
 		const planets = await config();
 
 		planets.forEach((planet) => {
-			scene.add(planet.data.scene);
+			try {
+				scene.add(planet.data.scene);
+			} catch (error) {
+				errors.update((val) => [...val, error]);
+			}
 		});
 
 		renderer.setPixelRatio(window.devicePixelRatio);
@@ -71,17 +80,35 @@
 			renderer.render(scene, camera);
 		}
 		animate();
+		console.log(get(errors));
 	});
 </script>
+
+<div class="loading-screen">
+	<p>{$loadingMessage}</p>
+</div>
 
 <main>
 	<canvas id="background" bind:this={canvas} />
 </main>
 
 <style>
+	:global(body) {
+		padding: 0;
+	}
 	canvas {
 		top: 0;
 		left: 0;
 		position: fixed;
+	}
+
+	.loading-screen {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		background-color: black;
+		color: white;
 	}
 </style>

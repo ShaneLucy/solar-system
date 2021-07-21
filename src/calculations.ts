@@ -1,12 +1,17 @@
 import type { Planet } from './global';
+import { errors } from './store';
 
 /**
  * Calculates orbits
  */
 export const calcOrbit = (planet: Planet): void => {
-	planet.data.scene.position.x = planet.startX * Math.cos(planet.theta);
-	planet.data.scene.position.z = planet.startX * Math.sin(planet.theta);
-	planet.theta += planet.dTheta;
+	try {
+		planet.data.scene.position.x = planet.startX * Math.cos(planet.theta);
+		planet.data.scene.position.z = planet.startX * Math.sin(planet.theta);
+		planet.theta += planet.dTheta;
+	} catch (error) {
+		errors.update((val) => [...val, error]);
+	}
 };
 
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(

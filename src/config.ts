@@ -1,4 +1,4 @@
-import { setPlanetDistances, setPlanetScales } from './scaling';
+import { setPlanetDistancesNotToScale, setPlanetSizeNotToScale } from './scaling';
 import { setPlanets } from './planetLoader';
 import type { Planet } from './global';
 import { loadingMessage } from './store';
@@ -17,13 +17,6 @@ const solarSystemObjectPaths = [
 ];
 
 /**
- * Configures planet data from gLTF files
- */
-const configPlanets = async (): Promise<Array<Planet>> => {
-	return await setPlanets(solarSystemObjectPaths);
-};
-
-/**
  * Sets the starting theta and dTheta values for each planet
  */
 const setThetas = (planets: Array<Planet>): Array<Planet> => {
@@ -38,11 +31,11 @@ const setThetas = (planets: Array<Planet>): Array<Planet> => {
  * Returns the completed planet object
  */
 export const config = async (): Promise<Array<Planet>> => {
-	const planets = await configPlanets();
-	loadingMessage.set('Scaling the solar system');
+	const planets = await setPlanets(solarSystemObjectPaths);
+	loadingMessage.set('Condensing the solar system');
 
-	const scaledPlanets = setPlanetScales(setPlanetDistances(planets));
+	const sizedPlanets = setPlanetSizeNotToScale(setPlanetDistancesNotToScale(planets));
 	loadingMessage.set('Calculating Orbits');
 
-	return setThetas(scaledPlanets);
+	return setThetas(sizedPlanets);
 };

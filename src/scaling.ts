@@ -5,7 +5,7 @@ const baseAverageScales: Array<BaseScales> = [
 	{ name: 'mercury', distance: 58_000_000, radius: 2_439 },
 	{ name: 'venus', distance: 108_000_000, radius: 6_052 },
 	{ name: 'earth', distance: 146_000_000, radius: 6_371 },
-	{ name: 'moon', distance: 146_384_000, radius: 1_737 },
+	{ name: 'moon', distance: 152_503_000, radius: 1_737 },
 	{ name: 'mars', distance: 230_000_000, radius: 3_389 },
 	{ name: 'jupiter', distance: 779_000_000, radius: 69_911 },
 	{ name: 'saturn', distance: 1_400_000_000, radius: 58_232 },
@@ -44,6 +44,7 @@ export const setPlanetDistances = (planets: Array<Planet>): Array<Planet> => {
 	});
 	return planets;
 };
+
 /**
  * 
  // suns scale on graph is 10

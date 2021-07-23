@@ -33,7 +33,7 @@ const scaledDiameter: Array<ScaledDiameter> = baseAverageScales.map((value) => {
 /**
  * Sets each planets start position
  */
-export const setPlanetDistances = (planets: Array<Planet>): Array<Planet> => {
+export const setPlanetDistancesToScale = (planets: Array<Planet>): Array<Planet> => {
 	planets.forEach((planet) => {
 		scaledDistances.forEach((distance) => {
 			if (planet.name === distance.name) {
@@ -45,28 +45,50 @@ export const setPlanetDistances = (planets: Array<Planet>): Array<Planet> => {
 	return planets;
 };
 
-/**
- * 
- // suns scale on graph is 10
-// suns diamater is 2 * 695508 === 1391016
-// suns scale on graph / suns diameter = 0.000007189
-// suns diamater * 0.000007189 === 10
-// multiply each planets diamater by the scaling factor 0.000007189
+export const setPlanetDistancesNotToScale = (planets: Array<Planet>): Array<Planet> => {
+	let distanceBetweenPlanets = 2_000;
+	planets.forEach((planet, index) => {
+		distanceBetweenPlanets += index * 200;
+		planet.startX = distanceBetweenPlanets * index;
+		planet.data.scene.position.x = distanceBetweenPlanets * index;
+	});
+	return planets;
+};
+
+/*
+ * suns scale on graph is 10
+ * suns diamater is 2 * 695508 === 1391016
+ * suns scale on graph / suns diameter = 0.000007189
+ * suns diamater * 0.000007189 === 10
+ * multiply each planets diamater by the scaling factor 0.000007189
  */
 const sizeScalingfactor = (): number => {
 	const sunsDiamater = baseAverageScales[0].radius * 2;
 	return 10 / sunsDiamater;
 };
 
-export const setPlanetScales = (planets: Array<Planet>): Array<Planet> => {
+export const setPlanetSizeToScale = (planets: Array<Planet>): Array<Planet> => {
+	const scalingFactor = sizeScalingfactor();
 	planets.forEach((planet) => {
 		scaledDiameter.forEach((diameter) => {
 			if (planet.name === diameter.name) {
-				planet.data.scene.scale.x = planet.scale = diameter.diameter * sizeScalingfactor();
-				planet.data.scene.scale.y = planet.scale = diameter.diameter * sizeScalingfactor();
-				planet.data.scene.scale.z = planet.scale = diameter.diameter * sizeScalingfactor();
+				planet.data.scene.scale.x = diameter.diameter * scalingFactor;
+				planet.data.scene.scale.y = diameter.diameter * scalingFactor;
+				planet.data.scene.scale.z = diameter.diameter * scalingFactor;
 			}
 		});
 	});
+	return planets;
+};
+
+export const setPlanetSizeNotToScale = (planets: Array<Planet>): Array<Planet> => {
+	planets.forEach((planet) => {
+		planet.data.scene.scale.x = 0.75;
+		planet.data.scene.scale.y = 0.75;
+		planet.data.scene.scale.z = 0.75;
+	});
+	planets[0].data.scene.scale.x = 1.5;
+	planets[0].data.scene.scale.y = 1.5;
+	planets[0].data.scene.scale.z = 1.5;
 	return planets;
 };

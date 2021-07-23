@@ -21,11 +21,17 @@
 	import { config } from './config';
 	import { errors, loadingMessage } from './store';
 	import { get } from 'svelte/store';
+	import {
+		setPlanetSizeToScale,
+		setPlanetDistancesToScale,
+		setPlanetDistancesNotToScale,
+		setPlanetSizeNotToScale
+	} from './scaling';
 
 	let canvas;
 
 	const scene = new Scene();
-	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 4500000);
+	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 4_500_000);
 	const light = new AmbientLight('white');
 	const grid = new GridHelper(100000, 100, 'white', 'white');
 	const axes = new AxesHelper(30000);
@@ -36,8 +42,7 @@
 	// scene.add(grid);
 	scene.add(axes);
 
-	// scene.background = space;
-	camera.position.setZ(6000);
+	camera.position.setZ(4_000);
 
 	light.position.set(100, 1000, 100);
 
@@ -49,11 +54,13 @@
 	// mesh.rotateX(20);
 	// mesh.rotateZ(0);
 	// mesh.rotateY(0);
+	let planets;
 	onMount(async () => {
 		const renderer = new WebGLRenderer({
 			canvas: canvas
 		});
-		const planets = await config();
+
+		planets = await config();
 
 		planets.forEach((planet) => {
 			try {
@@ -82,6 +89,14 @@
 		animate();
 		console.log(get(errors));
 	});
+
+	let scaledSolarSystem = false;
+	async function changeScale() {
+		scaledSolarSystem = !scaledSolarSystem;
+		scaledSolarSystem
+			? setPlanetSizeToScale(setPlanetDistancesToScale(await planets))
+			: setPlanetSizeNotToScale(setPlanetDistancesNotToScale(await planets));
+	}
 </script>
 
 <div class="loading-screen">
@@ -89,6 +104,7 @@
 </div>
 
 <main>
+	<button on:click={changeScale}>Change Scale</button>
 	<canvas id="background" bind:this={canvas} />
 </main>
 
@@ -96,6 +112,16 @@
 	:global(body) {
 		padding: 0;
 	}
+
+	button {
+		position: absolute;
+		display: block;
+		z-index: 99;
+		left: 0;
+		top: 0;
+		background-color: violet;
+	}
+
 	canvas {
 		top: 0;
 		left: 0;

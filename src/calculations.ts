@@ -1,11 +1,6 @@
 import type { Planet } from './global';
 import { errors } from './store';
-import {
-	SphereGeometry,
-	MeshStandardMaterial,
-	Mesh,
-	MathUtils
-} from 'three';
+import { SphereGeometry, MeshStandardMaterial, Mesh, MathUtils } from 'three';
 
 /**
  * Calculates orbits
@@ -21,15 +16,15 @@ export const calcOrbit = (planet: Planet): void => {
 };
 
 export const createStar = (): Mesh<SphereGeometry, MeshStandardMaterial> => {
-		const geometry = new SphereGeometry(10, 48, 48);
-		const material = new MeshStandardMaterial({ color: 0xffffff });
-		const star = new Mesh(geometry, material);
-		const [x, y, z] = Array(3)
-			.fill(0)
-			.map(() => MathUtils.randFloatSpread(10_000));
-		star.position.set(x, y, z);
-		return star
-	}
+	const geometry = new SphereGeometry(10, 48, 48);
+	const material = new MeshStandardMaterial({ color: 0xffffff });
+	const star = new Mesh(geometry, material);
+	const [x, y, z] = Array(3)
+		.fill(0)
+		.map(() => MathUtils.randFloatSpread(10_000));
+	star.position.set(x, y, z);
+	return star;
+};
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,
 // 	venusTheta,

@@ -7,7 +7,7 @@ const gltfLoader = new GLTFLoader();
 export const loadModel = async (url: string): Promise<GLTF> => {
 	try {
 		return await gltfLoader.loadAsync(url, (xhr) => {
-			loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100))
+			loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
 		});
 	} catch (error) {
 		errors.update((val) => [...val, error]);

@@ -7,10 +7,6 @@
 </script>
 
 <Router {url}>
-	<!-- <nav>
-		<Link to="/">Home</Link>
-		<Link to="/sun">Sun</Link>
-	</nav> -->
 	<div>
 		<Route path="/sun" component={Sun} />
 		<Route path="/"><Home /></Route>

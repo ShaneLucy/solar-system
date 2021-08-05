@@ -2,6 +2,7 @@
 	import { Router, Link, Route } from 'svelte-routing';
 	import Home from '../views/SolarSystem.svelte';
 	import Sun from '../views/Sun.svelte';
+
 	export let url = '';
 </script>
 

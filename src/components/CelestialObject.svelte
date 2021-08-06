@@ -11,7 +11,6 @@
 
 	export let name: string;
 	let canvas;
-	const lowerCaseName = name.replace(/^\w/, (c) => c.toLowerCase());
 
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 10_000);
@@ -40,7 +39,7 @@
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		const planet = await loadModel(`assets/models/${lowerCaseName}.glb`);
+		const planet = await loadModel(`assets/models/${name}.glb`);
 
 		loadingMessage.set('Generating Scene');
 		try {
@@ -68,7 +67,7 @@
 	});
 </script>
 
-<HeadConfig name={lowerCaseName} />
+<HeadConfig {name} />
 <LoadingScreen />
 
 <main>

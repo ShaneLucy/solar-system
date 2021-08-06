@@ -6,11 +6,12 @@
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 	import { loadingStatus, loadingMessage, loadingPercent } from '../store';
 	import LoadingScreen from './LoadingScreen.svelte';
+	import HeadConfig from './HeadConfig.svelte';
 	import { createStar } from '../calculations';
 
-	export let path: string;
 	export let name: string;
 	let canvas;
+	const lowerCaseName = name.replace(/^\w/, (c) => c.toLowerCase());
 
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 10_000);
@@ -32,13 +33,15 @@
 		loadingStatus.set(true);
 		loadingMessage.set(`Generating ${name}`);
 		loadingPercent.set(0);
+
 		const renderer = new WebGLRenderer({
 			canvas: canvas
 		});
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		const planet = await loadModel(path);
+		const planet = await loadModel(`assets/models/${lowerCaseName}.glb`);
+
 		loadingMessage.set('Generating Scene');
 		try {
 			scene.add(planet.scene);
@@ -65,10 +68,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Solar System - {name}</title>
-</svelte:head>
-
+<HeadConfig name={lowerCaseName} />
 <LoadingScreen />
 
 <main>

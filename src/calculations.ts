@@ -21,7 +21,7 @@ export const createStar = (): Mesh<SphereGeometry, MeshStandardMaterial> => {
 	const star = new Mesh(geometry, material);
 	const [x, y, z] = Array(3)
 		.fill(0)
-		.map(() => MathUtils.randFloatSpread(10_000));
+		.map(() => MathUtils.randFloatSpread(15_000));
 	star.position.set(x, y, z);
 	return star;
 };

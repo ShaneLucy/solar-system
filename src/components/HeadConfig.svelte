@@ -21,7 +21,7 @@
 		sizes="16x16"
 		href={`assets/favicons/${name}/favicon-16x16.png`}
 	/>
-	<link rel="manifest" href={`assets/favicon/${name}/site.webmanifest`} />
+	<link rel="manifest" href={`assets/favicons/${name}/site.webmanifest`} />
 	<link
 		rel="mask-icon"
 		href={'assets/favicons/solar-system/safari-pinned-tab.svg'}

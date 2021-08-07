@@ -30,6 +30,10 @@ const getRandomColour = (): number => {
 	const colours = [0xa7a2fe, 0xcbcffe, 0xe8e9fe, 0xffffff, 0xccfe3a, 0xfeca1d, 0xff4421];
 	return colours[MathUtils.randInt(0, 6)];
 };
+
+export const getModelFilePath = (name: string): string => {
+	return `assets/models/${name}.glb`;
+};
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,
 // 	venusTheta,

@@ -28,6 +28,6 @@ export interface Planet {
 
 export interface AdditionalObjects {
 	name: string;
-    distanceFrom: number;
-    sizeDiff: number;
+	distanceFrom: number;
+	sizeDiff: number;
 }

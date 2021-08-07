@@ -2,45 +2,46 @@
 	import { onMount } from 'svelte';
 	import { errors } from '../store';
 	import { loadModel } from '../planetLoader';
-	import { Scene, PerspectiveCamera, WebGLRenderer, AmbientLight, TextureLoader } from 'three';
+	import { Scene, PerspectiveCamera, WebGLRenderer, AmbientLight } from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 	import { loadingStatus, loadingMessage, loadingPercent } from '../store';
 	import LoadingScreen from './LoadingScreen.svelte';
 	import HeadConfig from './HeadConfig.svelte';
-	import { createStar } from '../calculations';
+	import { createStar, getModelFilePath } from '../calculations';
+	import ResizeCanvas from './ResizeCanvas.svelte';
+	import type { AdditionalObjects } from '../global';
 
 	export let name: string;
+	export let additionalObjects: Array<AdditionalObjects> | null;
 	let canvas;
 
 	const scene = new Scene();
-	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 10_000);
+	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 50_000);
 	const light = new AmbientLight('white');
-	const space = new TextureLoader().load('assets/images/milky-way.jpg');
 
 	scene.add(light);
-	scene.background = space;
 	camera.position.setZ(7_50);
 	light.position.set(100, 1_000, 100);
 
 	let numStars = 0;
-	while (numStars < 300) {
+	while (numStars < 2_000) {
 		scene.add(createStar());
 		numStars += 1;
 	}
+	let renderer;
 
 	onMount(async () => {
 		loadingStatus.set(true);
 		loadingMessage.set(`Generating ${name}`);
 		loadingPercent.set(0);
 
-		const renderer = new WebGLRenderer({
+		renderer = new WebGLRenderer({
 			canvas: canvas
 		});
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		const planet = await loadModel(`assets/models/${name}.glb`);
-
+		const planet = await loadModel(getModelFilePath(name));
 		loadingMessage.set('Generating Scene');
 		try {
 			scene.add(planet.scene);
@@ -62,11 +63,26 @@
 			renderer.render(scene, camera);
 			controls.update();
 		}
+
 		loadingStatus.set(false);
 		animate();
+
+		try {
+			additionalObjects.forEach(async (object) => {
+				const model = await loadModel(getModelFilePath(object.name));
+				model.scene.scale.x = 1 / object.sizeDiff;
+				model.scene.scale.y = 1 / object.sizeDiff;
+				model.scene.scale.z = 1 / object.sizeDiff;
+				model.scene.position.x = object.distanceFrom;
+				scene.add(model.scene);
+			});
+		} catch (error) {
+			errors.update((val) => [...val, error]);
+		}
 	});
 </script>
 
+<ResizeCanvas {camera} {renderer} />
 <HeadConfig {name} />
 <LoadingScreen />
 

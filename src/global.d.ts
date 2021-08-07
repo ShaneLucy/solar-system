@@ -25,3 +25,9 @@ export interface Planet {
 	dTheta?: number;
 	scale?: number;
 }
+
+export interface AdditionalObjects {
+	name: string;
+    distanceFrom: number;
+    sizeDiff: number;
+}

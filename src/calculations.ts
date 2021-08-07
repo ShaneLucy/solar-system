@@ -16,14 +16,19 @@ export const calcOrbit = (planet: Planet): void => {
 };
 
 export const createStar = (): Mesh<SphereGeometry, MeshStandardMaterial> => {
-	const geometry = new SphereGeometry(10, 48, 48);
-	const material = new MeshStandardMaterial({ color: 0xffffff });
+	const geometry = new SphereGeometry(MathUtils.randInt(30, 60), 48, 48);
+	const material = new MeshStandardMaterial({ color: getRandomColour() });
 	const star = new Mesh(geometry, material);
 	const [x, y, z] = Array(3)
 		.fill(0)
-		.map(() => MathUtils.randFloatSpread(15_000));
+		.map(() => MathUtils.randFloatSpread(200_000));
 	star.position.set(x, y, z);
 	return star;
+};
+
+const getRandomColour = (): number => {
+	const colours = [0xa7a2fe, 0xcbcffe, 0xe8e9fe, 0xffffff, 0xccfe3a, 0xfeca1d, 0xff4421];
+	return colours[MathUtils.randInt(0, 6)];
 };
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,

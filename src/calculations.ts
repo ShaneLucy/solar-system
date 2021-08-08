@@ -15,15 +15,36 @@ export const calcOrbit = (planet: Planet): void => {
 	}
 };
 
-export const createStar = (): Mesh<SphereGeometry, MeshStandardMaterial> => {
-	const geometry = new SphereGeometry(MathUtils.randInt(30, 60), 48, 48);
+export const createStar = (
+	sceneSize: number,
+	threshold: number
+): Mesh<SphereGeometry, MeshStandardMaterial> => {
+	const geometry = new SphereGeometry(1_000, 48, 48);
 	const material = new MeshStandardMaterial({ color: getRandomColour() });
 	const star = new Mesh(geometry, material);
 	const [x, y, z] = Array(3)
 		.fill(0)
-		.map(() => MathUtils.randFloatSpread(200_000));
-	star.position.set(x, y, z);
-	return star;
+		.map(() => MathUtils.randFloatSpread(sceneSize));
+
+	if (validateStar(threshold, x, y, z)) {
+		star.position.set(x, y, z);
+		return star;
+	}
+};
+
+const validateStar = (threshold: number, ...positions: Array<number>): boolean => {
+	const checkLowerThreshold = (position) => {
+		return position <= -Math.abs(threshold);
+	};
+	const checkUpperThreshold = (position) => {
+		return position >= Math.abs(threshold);
+	};
+
+	if (positions.some(checkUpperThreshold) || positions.some(checkLowerThreshold)) {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 const getRandomColour = (): number => {

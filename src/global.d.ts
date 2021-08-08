@@ -26,8 +26,16 @@ export interface Planet {
 	scale?: number;
 }
 
-export interface AdditionalObjects {
+type Classification = 'Sun' | 'Planet' | 'Dwarf Planet' | 'Moon' | 'Man Made Satelite';
+export interface AdditionalObject {
 	name: string;
-	distanceFrom: number;
-	sizeDiff: number;
+	distanceFromPrimary: number;
+	sizeDiffFromPrimary: number;
+	classification: Classification;
+}
+
+export interface CelestialObject {
+	name: string;
+	additionalObjects: Array<AdditionalObject> | null;
+	classification: Classification;
 }

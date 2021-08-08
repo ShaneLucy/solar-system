@@ -89,10 +89,10 @@
 		additionalObjects.forEach(async (object) => {
 			try {
 				const model = await loadModel(getModelFilePath(object.name));
-				model.scene.scale.x = 1 / object.sizeDiff;
-				model.scene.scale.y = 1 / object.sizeDiff;
-				model.scene.scale.z = 1 / object.sizeDiff;
-				model.scene.position.x = diameter + object.distanceFrom;
+				model.scene.scale.x = 1 / object.sizeDiffFromPrimary;
+				model.scene.scale.y = 1 / object.sizeDiffFromPrimary;
+				model.scene.scale.z = 1 / object.sizeDiffFromPrimary;
+				model.scene.position.x = diameter + object.distanceFromPrimary;
 
 				const object3d = new Object3D();
 				object3d.add(model.scene);

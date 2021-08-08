@@ -2,21 +2,30 @@
 	import { onMount } from 'svelte';
 	import { errors } from '../store';
 	import { loadModel } from '../planetLoader';
-	import { Scene, PerspectiveCamera, WebGLRenderer, AmbientLight } from 'three';
+	import {
+		Scene,
+		PerspectiveCamera,
+		WebGLRenderer,
+		AmbientLight,
+		sRGBEncoding,
+		Object3D,
+		Box3
+	} from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 	import { loadingStatus, loadingMessage, loadingPercent } from '../store';
 	import LoadingScreen from './LoadingScreen.svelte';
 	import HeadConfig from './HeadConfig.svelte';
-	import { createStar, getModelFilePath } from '../calculations';
+	import { createStar, getModelFilePath, calcOrbit } from '../calculations';
 	import ResizeCanvas from './ResizeCanvas.svelte';
-	import type { AdditionalObjects } from '../global';
+	import type { AdditionalObject, Planet } from '../global';
 
 	export let name: string;
-	export let additionalObjects: Array<AdditionalObjects> | null;
+	export let additionalObjects: Array<AdditionalObject> | null;
+	export let classification: string;
 	let canvas;
 
 	const scene = new Scene();
-	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 50_000);
+	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 2_000_000);
 	const light = new AmbientLight('white');
 
 	scene.add(light);
@@ -25,8 +34,11 @@
 
 	let numStars = 0;
 	while (numStars < 2_000) {
-		scene.add(createStar());
-		numStars += 1;
+		const star = createStar(2_000_000, 400_000);
+		if (star) {
+			scene.add(star);
+			numStars += 1;
+		}
 	}
 	let renderer;
 
@@ -38,21 +50,28 @@
 		renderer = new WebGLRenderer({
 			canvas: canvas
 		});
+		renderer.outputEncoding = sRGBEncoding;
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
 		const planet = await loadModel(getModelFilePath(name));
+
 		loadingMessage.set('Generating Scene');
+		const object3d = new Object3D();
 		try {
-			scene.add(planet.scene);
+			object3d.add(planet.scene);
+			scene.add(object3d);
 		} catch (error) {
 			errors.update((val) => [...val, error]);
 		}
 
+		const boundingBox = new Box3().setFromObject(object3d);
+
+		const boundingSize = boundingBox.getSize(boundingBox.max);
+		const diameter = boundingSize.x / 2;
 		const controls = new OrbitControls(camera, renderer.domElement);
-		controls.autoRotate = true;
-		controls.autoRotateSpeed = 0.1;
-		controls.maxDistance = 7_500;
+
+		controls.maxDistance = 50_000;
 		controls.minDistance = 5_00;
 		controls.enableDamping = true;
 		controls.dampingFactor = 0.05;
@@ -67,18 +86,21 @@
 		loadingStatus.set(false);
 		animate();
 
-		try {
-			additionalObjects.forEach(async (object) => {
+		additionalObjects.forEach(async (object) => {
+			try {
 				const model = await loadModel(getModelFilePath(object.name));
 				model.scene.scale.x = 1 / object.sizeDiff;
 				model.scene.scale.y = 1 / object.sizeDiff;
 				model.scene.scale.z = 1 / object.sizeDiff;
-				model.scene.position.x = object.distanceFrom;
-				scene.add(model.scene);
-			});
-		} catch (error) {
-			errors.update((val) => [...val, error]);
-		}
+				model.scene.position.x = diameter + object.distanceFrom;
+
+				const object3d = new Object3D();
+				object3d.add(model.scene);
+				scene.add(object3d);
+			} catch (error) {
+				errors.update((val) => [...val, error]);
+			}
+		});
 	});
 </script>
 

@@ -28,6 +28,8 @@
 		setPlanetSizeNotToScale
 	} from '../scaling';
 
+	import HeadConfig from '../components/HeadConfig.svelte';
+
 	let canvas;
 
 	const scene = new Scene();
@@ -99,6 +101,7 @@
 	}
 </script>
 
+<HeadConfig name="solar-system" />
 <div class="loading-screen">
 	<p>{$loadingMessage}</p>
 </div>

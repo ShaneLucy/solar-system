@@ -25,3 +25,17 @@ export interface Planet {
 	dTheta?: number;
 	scale?: number;
 }
+
+type Classification = 'Sun' | 'Planet' | 'Dwarf Planet' | 'Moon' | 'Man Made Satelite';
+export interface AdditionalObject {
+	name: string;
+	distanceFromPrimary: number;
+	sizeDiffFromPrimary: number;
+	classification: Classification;
+}
+
+export interface CelestialObject {
+	name: string;
+	additionalObjects: Array<AdditionalObject> | null;
+	classification: Classification;
+}

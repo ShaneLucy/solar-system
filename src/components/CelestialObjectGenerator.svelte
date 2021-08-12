@@ -86,21 +86,23 @@
 		loadingStatus.set(false);
 		animate();
 
-		additionalObjects.forEach(async (object) => {
-			try {
-				const model = await loadModel(getModelFilePath(object.name));
-				model.scene.scale.x = 1 / object.sizeDiffFromPrimary;
-				model.scene.scale.y = 1 / object.sizeDiffFromPrimary;
-				model.scene.scale.z = 1 / object.sizeDiffFromPrimary;
-				model.scene.position.x = diameter + object.distanceFromPrimary;
+		if (additionalObjects !== null) {
+			additionalObjects.forEach(async (object) => {
+				try {
+					const model = await loadModel(getModelFilePath(object.name));
+					model.scene.scale.x = 1 / object.sizeDiffFromPrimary;
+					model.scene.scale.y = 1 / object.sizeDiffFromPrimary;
+					model.scene.scale.z = 1 / object.sizeDiffFromPrimary;
+					model.scene.position.x = diameter + object.distanceFromPrimary;
 
-				const object3d = new Object3D();
-				object3d.add(model.scene);
-				scene.add(object3d);
-			} catch (error) {
-				errors.update((val) => [...val, error]);
-			}
-		});
+					const object3d = new Object3D();
+					object3d.add(model.scene);
+					scene.add(object3d);
+				} catch (error) {
+					errors.update((val) => [...val, error]);
+				}
+			});
+		}
 	});
 </script>
 

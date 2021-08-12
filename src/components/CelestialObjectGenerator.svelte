@@ -17,7 +17,7 @@
 	import HeadConfig from './HeadConfig.svelte';
 	import { createStar, getModelFilePath, calcOrbit } from '../calculations';
 	import ResizeCanvas from './ResizeCanvas.svelte';
-	import type { AdditionalObject, Planet } from '../global';
+	import type { AdditionalObject, PreparedOject } from '../types/index';
 
 	export let name: string;
 	export let additionalObjects: Array<AdditionalObject> | null;
@@ -27,6 +27,7 @@
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 2_000_000);
 	const light = new AmbientLight('white');
+	const preparedObjects: Array<PreparedOject> = [];
 
 	scene.add(light);
 	camera.position.setZ(7_50);
@@ -55,9 +56,10 @@
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
 		const planet = await loadModel(getModelFilePath(name));
+		const object3d = new Object3D();
 
 		loadingMessage.set('Generating Scene');
-		const object3d = new Object3D();
+
 		try {
 			object3d.add(planet.scene);
 			scene.add(object3d);
@@ -66,11 +68,10 @@
 		}
 
 		const boundingBox = new Box3().setFromObject(object3d);
-
 		const boundingSize = boundingBox.getSize(boundingBox.max);
 		const diameter = boundingSize.x / 2;
-		const controls = new OrbitControls(camera, renderer.domElement);
 
+		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.maxDistance = 50_000;
 		controls.minDistance = 5_00;
 		controls.enableDamping = true;
@@ -81,6 +82,11 @@
 			requestAnimationFrame(animate);
 			renderer.render(scene, camera);
 			controls.update();
+			if (preparedObjects.length > 0) {
+				preparedObjects.forEach((value) => {
+					calcOrbit(value);
+				});
+			}
 		}
 
 		loadingStatus.set(false);
@@ -89,15 +95,20 @@
 		if (additionalObjects !== null) {
 			additionalObjects.forEach(async (object) => {
 				try {
-					const model = await loadModel(getModelFilePath(object.name));
-					model.scene.scale.x = 1 / object.sizeDiffFromPrimary;
-					model.scene.scale.y = 1 / object.sizeDiffFromPrimary;
-					model.scene.scale.z = 1 / object.sizeDiffFromPrimary;
-					model.scene.position.x = diameter + object.distanceFromPrimary;
+					const model: PreparedOject = {
+						data: await loadModel(getModelFilePath(object.name)),
+						theta: object.theta,
+						dTheta: object.dTheta,
+						distanceFromPrimary: object.distanceFromPrimary
+					};
 
-					const object3d = new Object3D();
-					object3d.add(model.scene);
-					scene.add(object3d);
+					model.data.scene.scale.x = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.scale.y = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.scale.z = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.position.x = diameter + object.distanceFromPrimary;
+
+					preparedObjects.push(model);
+					scene.add(model.data.scene);
 				} catch (error) {
 					errors.update((val) => [...val, error]);
 				}

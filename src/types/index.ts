@@ -36,9 +36,8 @@ export interface CelestialObject {
 	theta?: number;
 	dTheta?: number;
 }
-	
 
-export type AdditionalObject = Omit<CelestialObject, 'additionalObjects'>
+export type AdditionalObject = Omit<CelestialObject, 'additionalObjects'>;
 
 export interface PreparedOject {
 	data: GLTF;

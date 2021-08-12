@@ -1,15 +1,15 @@
-import type { Planet } from './global';
+import type { PreparedOject } from './types/index';
 import { errors } from './store';
 import { SphereGeometry, MeshStandardMaterial, Mesh, MathUtils } from 'three';
 
 /**
  * Calculates orbits
  */
-export const calcOrbit = (planet: Planet): void => {
+export const calcOrbit = (object: PreparedOject): void => {
 	try {
-		planet.data.scene.position.x = planet.startX * Math.cos(planet.theta);
-		planet.data.scene.position.z = planet.startX * Math.sin(planet.theta);
-		planet.theta += planet.dTheta;
+		object.data.scene.position.x = object.distanceFromPrimary * Math.cos(object.theta);
+		object.data.scene.position.z = object.distanceFromPrimary * Math.sin(object.theta);
+		object.theta += object.dTheta;
 	} catch (error) {
 		errors.update((val) => [...val, error]);
 	}

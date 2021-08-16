@@ -25,7 +25,7 @@ export interface Planet {
 	scale?: number;
 }
 
-type Classification = 'Sun' | 'Planet' | 'Dwarf Planet' | 'Moon' | 'Man Made Satelite';
+type Classification = 'Star' | 'Planet' | 'Dwarf Planet' | 'Moon' | 'Man Made Satelite';
 
 export interface CelestialObject {
 	name: string;

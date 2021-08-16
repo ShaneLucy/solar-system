@@ -4,7 +4,7 @@ const celestialObjects: Array<CelestialObject> = [
 	{
 		name: 'sun',
 		additionalObjects: null,
-		classification: 'Sun'
+		classification: 'Star'
 	},
 	{
 		name: 'mercury',

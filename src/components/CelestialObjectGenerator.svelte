@@ -92,28 +92,26 @@
 		loadingStatus.set(false);
 		animate();
 
-		if (additionalObjects !== null) {
-			additionalObjects.forEach(async (object) => {
-				try {
-					const model: PreparedOject = {
-						data: await loadModel(getModelFilePath(object.name)),
-						theta: object.theta,
-						dTheta: object.dTheta,
-						distanceFromPrimary: object.distanceFromPrimary
-					};
+		additionalObjects?.forEach(async (object) => {
+			try {
+				const model: PreparedOject = {
+					data: await loadModel(getModelFilePath(object.name)),
+					theta: object.theta,
+					dTheta: object.dTheta,
+					distanceFromPrimary: object.distanceFromPrimary
+				};
 
-					model.data.scene.scale.x = 1 / object.sizeDiffFromPrimary;
-					model.data.scene.scale.y = 1 / object.sizeDiffFromPrimary;
-					model.data.scene.scale.z = 1 / object.sizeDiffFromPrimary;
-					model.data.scene.position.x = diameter + object.distanceFromPrimary;
+				model.data.scene.scale.x = 1 / object.sizeDiffFromPrimary;
+				model.data.scene.scale.y = 1 / object.sizeDiffFromPrimary;
+				model.data.scene.scale.z = 1 / object.sizeDiffFromPrimary;
+				model.data.scene.position.x = diameter + object.distanceFromPrimary;
 
-					preparedObjects.push(model);
-					scene.add(model.data.scene);
-				} catch (error) {
-					errors.update((val) => [...val, error]);
-				}
-			});
-		}
+				preparedObjects.push(model);
+				scene.add(model.data.scene);
+			} catch (error) {
+				errors.update((val) => [...val, error]);
+			}
+		});
 	});
 </script>
 

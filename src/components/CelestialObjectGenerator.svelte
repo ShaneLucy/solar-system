@@ -12,8 +12,16 @@
 		Box3
 	} from 'three';
 	import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-	import { loadingStatus, loadingMessage, loadingPercent } from '../store';
+	import {
+		loadingStatus,
+		loadingMessage,
+		loadingPercent,
+		additionalLoadingStatus,
+		loadedObjects,
+		objectsToLoad
+	} from '../store';
 	import LoadingScreen from './LoadingScreen.svelte';
+	import AdditionalLoadingScreen from './AdditionalLoadingScreen.svelte';
 	import HeadConfig from './HeadConfig.svelte';
 	import { createStar, getModelFilePath, calcOrbit } from '../calculations';
 	import ResizeCanvas from './ResizeCanvas.svelte';
@@ -92,26 +100,38 @@
 		loadingStatus.set(false);
 		animate();
 
-		additionalObjects?.forEach(async (object) => {
-			try {
-				const model: PreparedOject = {
-					data: await loadModel(getModelFilePath(object.name)),
-					theta: object.theta,
-					dTheta: object.dTheta,
-					distanceFromPrimary: object.distanceFromPrimary
-				};
-
-				model.data.scene.scale.x = 1 / object.sizeDiffFromPrimary;
-				model.data.scene.scale.y = 1 / object.sizeDiffFromPrimary;
-				model.data.scene.scale.z = 1 / object.sizeDiffFromPrimary;
-				model.data.scene.position.x = diameter + object.distanceFromPrimary;
-
-				preparedObjects.push(model);
-				scene.add(model.data.scene);
-			} catch (error) {
-				errors.update((val) => [...val, error]);
+		if (additionalObjects !== null) {
+			$additionalLoadingStatus = true;
+			for (const object of additionalObjects) {
+				objectsToLoad.update((val) => [...val, object.name]);
 			}
-		});
+
+			for (const object of additionalObjects) {
+				loadingMessage.set(`Generating ${object.name}`);
+				try {
+					const model: PreparedOject = {
+						data: await loadModel(getModelFilePath(object.name)),
+						theta: object.theta,
+						dTheta: object.dTheta,
+						distanceFromPrimary: object.distanceFromPrimary
+					};
+
+					model.data.scene.scale.x = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.scale.y = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.scale.z = 1 / object.sizeDiffFromPrimary;
+					model.data.scene.position.x = diameter + object.distanceFromPrimary;
+
+					preparedObjects.push(model);
+					scene.add(model.data.scene);
+
+					loadedObjects.update((val) => [...val, object.name]);
+					objectsToLoad.update((val) => val.splice(1));
+					if ($objectsToLoad.length === 0) $additionalLoadingStatus = false;
+				} catch (error) {
+					errors.update((val) => [...val, error]);
+				}
+			}
+		}
 	});
 </script>
 
@@ -120,5 +140,6 @@
 <LoadingScreen />
 
 <main>
+	<AdditionalLoadingScreen />
 	<canvas id="background" bind:this={canvas} />
 </main>

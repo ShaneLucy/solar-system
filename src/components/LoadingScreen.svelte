@@ -4,10 +4,8 @@
 
 {#if $loadingStatus}
 	<div>
-		<span>
-			<p>{$loadingMessage} {$loadingPercent}%</p>
-		</span>
-		<progress value={$loadingPercent} max="100">{$loadingPercent}</progress>
+		<label for="progress">{$loadingMessage} {$loadingPercent}%</label>
+		<progress id="progress" value={$loadingPercent} max="100">{$loadingPercent}</progress>
 	</div>
 {/if}
 
@@ -25,6 +23,10 @@
 		justify-content: center;
 		background-color: black;
 		color: white;
+	}
+
+	label {
+		text-transform: capitalize;
 	}
 
 	progress {

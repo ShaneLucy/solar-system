@@ -57,3 +57,8 @@ canvas {
 	left: 0;
 	position: fixed;
 }
+
+svg {
+	width: 2.5rem;
+	height: 2.5rem;
+}

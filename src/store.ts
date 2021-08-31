@@ -6,6 +6,8 @@ export const loadingPercent = writable(0);
 export const loadingStatus = writable(true);
 export const loadingMessage = writable('Downloading Textures');
 
-export const additionalLoadingStatus = writable(false);
+export const additionalLoadingComplete = writable(false);
 export const loadedObjects = writable([]);
 export const objectsToLoad = writable([]);
+
+export const showAdditionalLoader = writable(false);

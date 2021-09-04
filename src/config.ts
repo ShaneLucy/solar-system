@@ -237,22 +237,31 @@ const celestialObjects: Array<CelestialObject> = [
 /**
  * Sets the starting theta and dTheta values for each planet
  */
-const setThetas = (value: CelestialObject | AdditionalObject): void => {
-  value.dTheta = (2 * Math.PI) / value.distanceFromPrimary;
-  value.theta = 0;
+const setThetas = (
+  value: CelestialObject | AdditionalObject
+): Array<number> => {
+  const dTheta = (2 * Math.PI) / value.distanceFromPrimary;
+
+  return [dTheta, 0];
 };
 
 /**
  * Sets the completed array of celestial objects
  */
 const config = (): Array<CelestialObject> => {
-  celestialObjects.forEach((value) => {
+  celestialObjects.forEach((value, index) => {
     if (value.additionalObjects !== null) {
-      value.additionalObjects.forEach((val) => {
-        setThetas(val);
+      value.additionalObjects.forEach((val, idx) => {
+        [
+          celestialObjects[index].additionalObjects[idx].dTheta,
+          celestialObjects[index].additionalObjects[idx].theta
+        ] = setThetas(val);
       });
     }
-    setThetas(value);
+
+    [celestialObjects[index].dTheta, celestialObjects[index].theta] = setThetas(
+      value
+    );
   });
   return celestialObjects;
 };

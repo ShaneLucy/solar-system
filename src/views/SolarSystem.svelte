@@ -14,7 +14,7 @@
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
   import { loadingStatus, loadingMessage, loadingPercent } from '../store';
   import LoadingScreen from '../components/LoadingScreen.svelte';
-  import { calcOrbit } from '../calculations';
+  import calcOrbit from '../calculations';
   import ResizeCanvas from '../components/ResizeCanvas.svelte';
   import type { CelestialObject, PreparedOject } from '../types/index';
   import { completedCelestialObjects } from '../config';
@@ -22,7 +22,12 @@
   let canvas;
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 2_000_000);
+  const camera = new PerspectiveCamera(
+    100,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    2_000_000
+  );
   const light = new AmbientLight('white');
   const preparedObjects: Array<PreparedOject> = [];
 
@@ -93,7 +98,11 @@
       controls.update();
       // if (preparedObjects.length > 0) {
       // 	preparedObjects.forEach((value) => {
-      // 		calcOrbit(value);
+      // 		[
+      //     value.data.scene.position.x,
+      //     value.data.scene.position.z,
+      //     value.theta
+      //   ] = calcOrbit(value);
       // 	});
       // }
     }
@@ -135,7 +144,8 @@
               model.data.scene.scale.x = 1 / addObject.sizeDiffFromPrimary;
               model.data.scene.scale.y = 1 / addObject.sizeDiffFromPrimary;
               model.data.scene.scale.z = 1 / addObject.sizeDiffFromPrimary;
-              model.data.scene.position.x = diameter + addObject.distanceFromPrimary;
+              model.data.scene.position.x =
+                diameter + addObject.distanceFromPrimary;
 
               preparedObjects.push(model);
 

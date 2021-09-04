@@ -24,7 +24,7 @@
   } from '../store';
   import LoadingScreen from '../components/LoadingScreen.svelte';
   import HeadConfig from '../components/HeadConfig.svelte';
-  import { calcOrbit } from '../calculations';
+  import calcOrbit from '../calculations';
   import ResizeCanvas from '../components/ResizeCanvas.svelte';
   import type { AdditionalObject, PreparedOject } from '../types/index';
 
@@ -36,7 +36,12 @@
   let canvas;
 
   const scene = new Scene();
-  const camera = new PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 2_000_000);
+  const camera = new PerspectiveCamera(
+    100,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    2_000_000
+  );
   const light = new AmbientLight('white');
   const preparedObjects: Array<PreparedOject> = [];
 
@@ -87,7 +92,11 @@
       controls.update();
       if (preparedObjects.length > 0) {
         preparedObjects.forEach((value) => {
-          calcOrbit(value);
+          [
+            value.data.scene.position.x,
+            value.data.scene.position.z,
+            value.theta
+          ] = calcOrbit(value);
         });
       }
     }

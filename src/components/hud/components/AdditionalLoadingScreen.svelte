@@ -16,7 +16,10 @@
   });
 </script>
 
-<aside transition:fly={{ x: 200, easing: sineInOut, duration: 1_250 }} class="container">
+<aside
+  transition:fly={{ x: 200, easing: sineInOut, duration: 1_250 }}
+  class="container"
+>
   <header>
     <svg
       fill="none"
@@ -34,10 +37,15 @@
   </header>
   <div class="content">
     <label for="total"
-      >Generating Remainder {(($loadedObjects.length / totalProgressMax) * 100).toFixed(0)}%</label
+      >Generating Remainder {(
+        ($loadedObjects.length / totalProgressMax) *
+        100
+      ).toFixed(0)}%</label
     >
     <progress id="total" max={totalProgressMax} value={$loadedObjects.length}
-      >{(($loadedObjects.length / totalProgressMax) * 100).toFixed(0)}%</progress
+      >{(($loadedObjects.length / totalProgressMax) * 100).toFixed(
+        0
+      )}%</progress
     >
 
     <ol>
@@ -50,7 +58,9 @@
             >
           {:else if index < $loadedObjects.length}
             <label for={objectToLoad}>{objectToLoad} 100%</label>
-            <progress id={objectToLoad} value="100" max="100">{$loadingPercent}</progress>
+            <progress id={objectToLoad} value="100" max="100"
+              >{$loadingPercent}</progress
+            >
           {:else if index === $loadedObjects.length}
             <label for={objectToLoad}>{objectToLoad} {$loadingPercent}%</label>
             <progress id={objectToLoad} value={$loadingPercent} max="100"
@@ -58,7 +68,9 @@
             >
           {:else}
             <label for={objectToLoad}>{objectToLoad} 0%</label>
-            <progress id={objectToLoad} value="0" max="100">{$loadingPercent}</progress>
+            <progress id={objectToLoad} value="0" max="100"
+              >{$loadingPercent}</progress
+            >
           {/if}
         </li>
       {/each}

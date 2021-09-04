@@ -1,18 +1,18 @@
 import type { PreparedOject } from './types/index';
-import { errors } from './store';
 
 /**
  * Calculates orbits
  */
-export const calcOrbit = (object: PreparedOject): void => {
-  try {
-    object.data.scene.position.x = object.distanceFromPrimary * Math.cos(object.theta);
-    object.data.scene.position.z = object.distanceFromPrimary * Math.sin(object.theta);
-    object.theta += object.dTheta;
-  } catch (error) {
-    errors.update((val) => [...val, error]);
-  }
+const calcOrbit = (object: PreparedOject) => {
+  const orbitVal = [
+    object.distanceFromPrimary * Math.cos(object.theta),
+    object.distanceFromPrimary * Math.sin(object.theta),
+    object.dTheta
+  ];
+  return orbitVal;
 };
+
+export default calcOrbit;
 
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { loadingStatus, loadingMessage, loadingPercent } from '../store';
+	import { fade } from 'svelte/transition';
+	import { sineInOut } from 'svelte/easing';
 </script>
 
 {#if $loadingStatus}
-	<div>
+	<div transition:fade={{ duration: 1_250, easing: sineInOut }}>
 		<label for="progress">{$loadingMessage} {$loadingPercent}%</label>
 		<progress id="progress" value={$loadingPercent} max="100">{$loadingPercent}</progress>
 	</div>

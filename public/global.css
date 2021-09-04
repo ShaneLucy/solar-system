@@ -57,3 +57,28 @@ canvas {
 	left: 0;
 	position: fixed;
 }
+
+svg {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+aside {
+	position: absolute;
+	z-index: 700;
+	width: max-content;
+	height: max-content;
+	background-color: #212121;
+	color: white;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	
+}
+
+svg {
+	padding-top: 0.45rem;
+	cursor: pointer;
+}

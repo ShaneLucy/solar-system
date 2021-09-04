@@ -1,60 +1,19 @@
-import type { Planet } from './global';
-import { errors } from './store';
-import { SphereGeometry, MeshStandardMaterial, Mesh, MathUtils } from 'three';
+import type { PreparedOject } from './types/index';
 
 /**
  * Calculates orbits
  */
-export const calcOrbit = (planet: Planet): void => {
-	try {
-		planet.data.scene.position.x = planet.startX * Math.cos(planet.theta);
-		planet.data.scene.position.z = planet.startX * Math.sin(planet.theta);
-		planet.theta += planet.dTheta;
-	} catch (error) {
-		errors.update((val) => [...val, error]);
-	}
+const calcOrbit = (object: PreparedOject) => {
+  const orbitVal = [
+    object.distanceFromPrimary * Math.cos(object.theta),
+    object.distanceFromPrimary * Math.sin(object.theta),
+    object.dTheta
+  ];
+  return orbitVal;
 };
 
-export const createStar = (
-	sceneSize: number,
-	threshold: number
-): Mesh<SphereGeometry, MeshStandardMaterial> => {
-	const geometry = new SphereGeometry(1_000, 48, 48);
-	const material = new MeshStandardMaterial({ color: getRandomColour() });
-	const star = new Mesh(geometry, material);
-	const [x, y, z] = Array(3)
-		.fill(0)
-		.map(() => MathUtils.randFloatSpread(sceneSize));
+export default calcOrbit;
 
-	if (validateStar(threshold, x, y, z)) {
-		star.position.set(x, y, z);
-		return star;
-	}
-};
-
-const validateStar = (threshold: number, ...positions: Array<number>): boolean => {
-	const checkLowerThreshold = (position) => {
-		return position <= -Math.abs(threshold);
-	};
-	const checkUpperThreshold = (position) => {
-		return position >= Math.abs(threshold);
-	};
-
-	if (positions.some(checkUpperThreshold) || positions.some(checkLowerThreshold)) {
-		return true;
-	} else {
-		return false;
-	}
-};
-
-const getRandomColour = (): number => {
-	const colours = [0xa7a2fe, 0xcbcffe, 0xe8e9fe, 0xffffff, 0xccfe3a, 0xfeca1d, 0xff4421];
-	return colours[MathUtils.randInt(0, 6)];
-};
-
-export const getModelFilePath = (name: string): string => {
-	return `assets/models/${name}.glb`;
-};
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,
 // 	venusTheta,

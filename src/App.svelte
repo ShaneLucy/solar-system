@@ -1,12 +1,17 @@
 <script lang="ts">
 	import { Router, Route } from 'svelte-routing';
-	import CelestialObjectGenerator from './components/CelestialObjectGenerator.svelte';
+	import CelestialObjectGenerator from './views/CelestialObjectGenerator.svelte';
+	import E404 from './components/E404.svelte';
 	import SolarSystem from './views/SolarSystem.svelte';
-	import type { CelestialObject } from './types/index';
-	import { config } from './config';
+	import { completedCelestialObjects } from './config';
+	import { setBackgroundTexture } from './loaders';
+	import { onMount } from 'svelte';
 
 	export let url = '';
-	const celestialObjects: Array<CelestialObject> = config();
+
+	onMount(() => {
+		setBackgroundTexture();
+	});
 </script>
 
 <svelte:head>
@@ -24,7 +29,7 @@
 	<Route path="/">
 		<SolarSystem />
 	</Route>
-	{#each celestialObjects as object}
+	{#each completedCelestialObjects as object}
 		<Route path={`/${object.name}`}>
 			<CelestialObjectGenerator
 				name={object.name}
@@ -44,4 +49,7 @@
 			{/each}
 		{/if}
 	{/each}
+	<Route path="*">
+		<E404 />
+	</Route>
 </Router>

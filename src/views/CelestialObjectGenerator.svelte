@@ -24,7 +24,7 @@
 	} from '../store';
 	import LoadingScreen from '../components/LoadingScreen.svelte';
 	import HeadConfig from '../components/HeadConfig.svelte';
-	import { getModelFilePath, calcOrbit } from '../calculations';
+	import { calcOrbit } from '../calculations';
 	import ResizeCanvas from '../components/ResizeCanvas.svelte';
 	import type { AdditionalObject, PreparedOject } from '../types/index';
 
@@ -58,7 +58,7 @@
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		const planet = await loadModel(getModelFilePath(name));
+		const planet = await loadModel(name);
 		const object3d = new Object3D();
 
 		loadingMessage.set('Generating Scene');
@@ -107,7 +107,7 @@
 			for (const object of additionalObjects) {
 				try {
 					const model: PreparedOject = {
-						data: await loadModel(getModelFilePath(object.name)),
+						data: await loadModel(object.name),
 						theta: object.theta,
 						dTheta: object.dTheta,
 						distanceFromPrimary: object.distanceFromPrimary

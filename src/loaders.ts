@@ -5,11 +5,14 @@ import { CubeTextureLoader } from 'three';
 import { backgroundImagePaths } from './config';
 
 const gltfLoader = new GLTFLoader();
-const cubeLoader = new CubeTextureLoader();
+gltfLoader.setPath('assets/models/');
 
-export const loadModel = async (url: string): Promise<GLTF> => {
+const cubeLoader = new CubeTextureLoader();
+cubeLoader.setPath('assets/backgrounds/');
+
+export const loadModel = async (name: string): Promise<GLTF> => {
 	try {
-		return await gltfLoader.loadAsync(url, (xhr) => {
+		return await gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
 			loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
 		});
 	} catch (error) {
@@ -17,19 +20,12 @@ export const loadModel = async (url: string): Promise<GLTF> => {
 	}
 };
 
-const getPlanetName = (path: string): string => {
-	return path.split('\\').pop().split('/').pop();
-};
-
-export const setPlanets = async (planetPaths: Array<string>): Promise<Array<Planet>> => {
+export const setPlanets = async (celestialObjects: Array<string>): Promise<Array<Planet>> => {
 	return await Promise.all(
-		planetPaths.map(async (path) => {
-			const planetData = await loadModel(path);
-			const planetName = getPlanetName(path).split('.').shift();
-
+		celestialObjects.map(async (celestialObject) => {
 			return {
-				data: planetData,
-				name: planetName
+				data: await loadModel(celestialObject),
+				name: celestialObject
 			};
 		})
 	);

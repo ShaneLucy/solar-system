@@ -14,9 +14,6 @@ export const calcOrbit = (object: PreparedOject): void => {
 	}
 };
 
-export const getModelFilePath = (name: string): string => {
-	return `assets/models/${name}.glb`;
-};
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(
 // 	venusStartX,
 // 	venusTheta,

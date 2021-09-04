@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: ['airbnb-base', 'airbnb-typescript/base', 'prettier'],
   plugins: ['svelte3', '@typescript-eslint'],
   ignorePatterns: ['*.cjs, **/*.js'],
   overrides: [{ files: ['*.svelte'], processor: 'svelte3/svelte3' }],
@@ -10,11 +10,15 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2019
+    ecmaVersion: 2019,
+    project: './tsconfig.json'
   },
   env: {
     browser: true,
     es2017: true,
     node: true
+  },
+  rules: {
+    'import/no-extraneous-dependencies': 0
   }
 };

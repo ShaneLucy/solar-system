@@ -11,29 +11,29 @@ const cubeLoader = new CubeTextureLoader();
 cubeLoader.setPath('assets/backgrounds/');
 
 export const loadModel = async (name: string): Promise<GLTF> => {
-	try {
-		return await gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
-			loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
-		});
-	} catch (error) {
-		errors.update((val) => [...val, error]);
-	}
+  try {
+    return await gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
+      loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
+    });
+  } catch (error) {
+    errors.update((val) => [...val, error]);
+  }
 };
 
 export const setPlanets = async (celestialObjects: Array<string>): Promise<Array<Planet>> => {
-	return await Promise.all(
-		celestialObjects.map(async (celestialObject) => {
-			return {
-				data: await loadModel(celestialObject),
-				name: celestialObject
-			};
-		})
-	);
+  return await Promise.all(
+    celestialObjects.map(async (celestialObject) => {
+      return {
+        data: await loadModel(celestialObject),
+        name: celestialObject
+      };
+    })
+  );
 };
 
 /**
  * Generates the background texture
  */
 export const setBackgroundTexture = (): void => {
-	backgroundTexture.set(cubeLoader.load(backgroundImages));
+  backgroundTexture.set(cubeLoader.load(backgroundImages));
 };

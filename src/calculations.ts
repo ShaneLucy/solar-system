@@ -5,13 +5,13 @@ import { errors } from './store';
  * Calculates orbits
  */
 export const calcOrbit = (object: PreparedOject): void => {
-	try {
-		object.data.scene.position.x = object.distanceFromPrimary * Math.cos(object.theta);
-		object.data.scene.position.z = object.distanceFromPrimary * Math.sin(object.theta);
-		object.theta += object.dTheta;
-	} catch (error) {
-		errors.update((val) => [...val, error]);
-	}
+  try {
+    object.data.scene.position.x = object.distanceFromPrimary * Math.cos(object.theta);
+    object.data.scene.position.z = object.distanceFromPrimary * Math.sin(object.theta);
+    object.theta += object.dTheta;
+  } catch (error) {
+    errors.update((val) => [...val, error]);
+  }
 };
 
 // [venus.scene.position.x, venus.scene.position.z, venusTheta] = calcOrbit(

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { Link } from 'svelte-routing';
-	import { sineInOut } from 'svelte/easing';
 	import { fly } from 'svelte/transition';
 	import { completedCelestialObjects } from '../../../config';
 	import { showNavBar } from '../../../store';
 </script>
 
-<aside transition:fly={{ x: -200, easing: sineInOut, duration: 1_250 }}>
+<aside transition:fly={{ x: -200, duration: 1_250 }}>
 	<header>
 		<svg
 			fill="none"

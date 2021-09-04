@@ -2,7 +2,7 @@ import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import type { Planet } from './types/index';
 import { errors, loadingPercent, backgroundTexture } from './store';
 import { CubeTextureLoader } from 'three';
-import { backgroundImagePaths } from './config';
+import { backgroundImages } from './config';
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath('assets/models/');
@@ -35,5 +35,5 @@ export const setPlanets = async (celestialObjects: Array<string>): Promise<Array
  * Generates the background texture
  */
 export const setBackgroundTexture = (): void => {
-	backgroundTexture.set(cubeLoader.load(backgroundImagePaths));
+	backgroundTexture.set(cubeLoader.load(backgroundImages));
 };

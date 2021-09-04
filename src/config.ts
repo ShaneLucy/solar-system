@@ -1,5 +1,14 @@
 import type { CelestialObject, AdditionalObject } from './types/index';
 
+export const backgroundImages: Array<string> = [
+	'px.png',
+	'nx.png',
+	'py.png',
+	'ny.png',
+	'pz.png',
+	'nz.png'
+];
+
 const celestialObjects: Array<CelestialObject> = [
 	{
 		name: 'sun',
@@ -228,15 +237,15 @@ const celestialObjects: Array<CelestialObject> = [
 /**
  * Sets the starting theta and dTheta values for each planet
  */
-export const setThetas = (value: CelestialObject | AdditionalObject): void => {
+const setThetas = (value: CelestialObject | AdditionalObject): void => {
 	value.dTheta = (2 * Math.PI) / value.distanceFromPrimary;
 	value.theta = 0;
 };
 
 /**
- * Returns the completed planet object
+ * Sets the completed array of celestial objects
  */
-export const config = (): Array<CelestialObject> => {
+const config = (): Array<CelestialObject> => {
 	celestialObjects.forEach((value) => {
 		if (value.additionalObjects !== null) {
 			value.additionalObjects.forEach((val) => {
@@ -247,3 +256,5 @@ export const config = (): Array<CelestialObject> => {
 	});
 	return celestialObjects;
 };
+
+export const completedCelestialObjects: Array<CelestialObject> = config();

@@ -8,7 +8,6 @@ jobs:
   build-and-deploy:
     runs-on: macos-latest
 
-
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v2
@@ -22,6 +21,6 @@ jobs:
         run: npm run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
-          with:
-            branch: gh-pages
-            folder: public
+        with:
+          branch: gh-pages
+          folder: public

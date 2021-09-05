@@ -6,9 +6,7 @@
 
 {#if $loadingStatus}
   <div transition:fade={{ duration: 1_250, easing: sineInOut }}>
-    <label for="progress"
-      >{$loadingMessage} {$loadingPercent} {$loadingStatus}%</label
-    >
+    <label for="progress">{$loadingMessage} {$loadingPercent}%</label>
     <progress id="progress" value={$loadingPercent} max="100"
       >{$loadingPercent}</progress
     >

@@ -14,7 +14,6 @@ export const loadModel = async (name: string): Promise<GLTF> => {
   let model;
   try {
     model = gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
-      console.log(xhr)
       loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
     });
   } catch (error) {

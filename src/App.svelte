@@ -33,6 +33,7 @@
     <Route path={`/${object.name}`}>
       <CelestialObjectGenerator
         name={object.name}
+        radius={object.radius}
         additionalObjects={object.additionalObjects}
         classification={object.classification}
       />
@@ -42,6 +43,7 @@
         <Route path={`/${additionalObject.name}`}>
           <CelestialObjectGenerator
             name={additionalObject.name}
+            radius={additionalObject.radius}
             additionalObjects={null}
             classification={additionalObject.classification}
           />

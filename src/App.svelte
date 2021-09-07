@@ -2,7 +2,6 @@
   import { Router, Route } from 'svelte-routing';
   import CelestialObjectGenerator from './views/CelestialObjectGenerator.svelte';
   import E404 from './components/E404.svelte';
-  import SolarSystem from './views/SolarSystem.svelte';
   import { completedCelestialObjects } from './config';
   import { setBackgroundTexture } from './loaders';
   import { onMount } from 'svelte';
@@ -27,7 +26,12 @@
 
 <Router {url}>
   <Route path="/">
-    <SolarSystem />
+    <CelestialObjectGenerator
+      name={completedCelestialObjects[0].name}
+      radius={completedCelestialObjects[0].radius}
+      additionalObjects={completedCelestialObjects}
+      classification={completedCelestialObjects[0].classification}
+    />
   </Route>
   {#each completedCelestialObjects as object}
     <Route path={`/${object.name}`}>

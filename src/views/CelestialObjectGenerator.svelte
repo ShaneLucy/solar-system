@@ -13,7 +13,11 @@
   import HeadConfig from '../components/HeadConfig.svelte';
   import calcOrbit from '../calculations';
   import ResizeCanvas from '../components/ResizeCanvas.svelte';
-  import type { AdditionalObject, PreparedOject } from '../types/index';
+  import type {
+    AdditionalObject,
+    CelestialObject,
+    PreparedOject
+  } from '../types/index';
 
   import Hud from '../components/hud/Hud.svelte';
 
@@ -26,7 +30,10 @@
 
   export let name: string;
   export let radius: number;
-  export let additionalObjects: Array<AdditionalObject> | null;
+  export let additionalObjects:
+    | Array<AdditionalObject>
+    | Array<CelestialObject>
+    | null;
   export let classification: string;
 
   let canvas: HTMLCanvasElement;

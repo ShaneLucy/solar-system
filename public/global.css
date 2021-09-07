@@ -28,17 +28,15 @@ button {
 	margin: 0 0 0.5em 0;
 	border: 1px solid #ccc;
 	border-radius: 2px;
+	color: #333;
+	background-color: #f4f4f4;
+	outline: none;
 }
 
 input:disabled {
 	color: #ccc;
 }
 
-button {
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
-}
 
 button:disabled {
 	color: #999;
@@ -61,6 +59,8 @@ canvas {
 svg {
 	width: 2.5rem;
 	height: 2.5rem;
+	padding-top: 0.45rem;
+	cursor: pointer;
 }
 
 aside {
@@ -76,9 +76,4 @@ header {
 	display: flex;
 	align-items: center;
 	
-}
-
-svg {
-	padding-top: 0.45rem;
-	cursor: pointer;
 }

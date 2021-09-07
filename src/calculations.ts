@@ -1,14 +1,13 @@
-import type { PreparedOject } from './types/index';
-
 /**
  * Calculates orbits
  */
-const calcOrbit = (object: PreparedOject) => {
+const calcOrbit = (startX: number, theta: number, dTheta: number) => {
   const orbitVal = [
-    object.distanceFromPrimary * Math.cos(object.theta),
-    object.distanceFromPrimary * Math.sin(object.theta),
-    object.dTheta
+    startX * Math.cos(theta),
+    startX * Math.sin(theta),
+    theta + dTheta
   ];
+
   return orbitVal;
 };
 

@@ -9,70 +9,82 @@ export const backgroundImages: Array<string> = [
   'nz.png'
 ];
 
+/**
+ * Going to use a 100,000 to one scale
+ */
 const celestialObjects: Array<CelestialObject> = [
   {
     name: 'sun',
     additionalObjects: null,
-    classification: 'Star'
+    classification: 'Star',
+    distanceFromPrimary: 0,
+    radius: 6960
   },
   {
     name: 'mercury',
     additionalObjects: null,
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 502500,
+    radius: 31.855
   },
   {
     name: 'venus',
     additionalObjects: null,
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 1082089,
+    radius: 31.855
   },
   {
     name: 'earth',
     additionalObjects: [
-      {
-        name: 'iss',
-        distanceFromPrimary: 35.4,
-        sizeDiffFromPrimary: 31.855,
-        classification: 'Man Made Satelite'
-      },
+      // {
+      //   name: 'iss',
+      //   distanceFromPrimary: 3.54,
+      //   radius: 31.855,
+      //   classification: 'Man Made Satelite'
+      // },
       {
         name: 'luna',
-        distanceFromPrimary: 40_569,
-        sizeDiffFromPrimary: 3.66,
+        distanceFromPrimary: 4_056,
+        radius: 17.4,
         classification: 'Moon'
       }
     ],
-
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 1_495_978,
+    radius: 63.78
   },
   {
     name: 'mars',
     additionalObjects: [
       {
         name: 'odyssey',
-        distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        distanceFromPrimary: 2_000,
+        radius: 1,
         classification: 'Man Made Satelite'
       },
       {
         name: 'maven',
-        distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        distanceFromPrimary: 4_000,
+        radius: 1,
         classification: 'Man Made Satelite'
       },
       {
         name: 'deimos',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 1,
         classification: 'Moon'
       },
       {
         name: 'phobos',
-        distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        distanceFromPrimary: 7_000,
+        radius: 1,
         classification: 'Moon'
       }
     ],
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'jupiter',
@@ -80,35 +92,37 @@ const celestialObjects: Array<CelestialObject> = [
       {
         name: 'juno',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Man Made Satelite'
       },
       {
         name: 'callisto',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'europa',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'ganymede',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'io',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       }
     ],
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'saturn',
@@ -116,47 +130,49 @@ const celestialObjects: Array<CelestialObject> = [
       {
         name: 'cassini',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Man Made Satelite'
       },
       {
         name: 'enceladus',
         distanceFromPrimary: 6_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'titan',
         distanceFromPrimary: 7_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'dione',
         distanceFromPrimary: 8_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'hyperion',
         distanceFromPrimary: 9_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'lapetus',
         distanceFromPrimary: 10_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'mimas',
         distanceFromPrimary: 11_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       }
     ],
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'uranus',
@@ -164,29 +180,31 @@ const celestialObjects: Array<CelestialObject> = [
       {
         name: 'ariel',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'oberon',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'titania',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       },
       {
         name: 'umbriel',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       }
     ],
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'neptune',
@@ -194,11 +212,13 @@ const celestialObjects: Array<CelestialObject> = [
       {
         name: 'triton',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       }
     ],
-    classification: 'Planet'
+    classification: 'Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'pluto',
@@ -206,31 +226,41 @@ const celestialObjects: Array<CelestialObject> = [
       {
         name: 'charon',
         distanceFromPrimary: 5_000,
-        sizeDiffFromPrimary: 4,
+        radius: 4,
         classification: 'Moon'
       }
     ],
-    classification: 'Dwarf Planet'
+    classification: 'Dwarf Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'ceres',
     additionalObjects: null,
-    classification: 'Dwarf Planet'
+    classification: 'Dwarf Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'makemake',
     additionalObjects: null,
-    classification: 'Dwarf Planet'
+    classification: 'Dwarf Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'haumea',
     additionalObjects: null,
-    classification: 'Dwarf Planet'
+    classification: 'Dwarf Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   },
   {
     name: 'eris',
     additionalObjects: null,
-    classification: 'Dwarf Planet'
+    classification: 'Dwarf Planet',
+    distanceFromPrimary: 35.4,
+    radius: 31.855
   }
 ];
 

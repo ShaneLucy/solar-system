@@ -1,3 +1,4 @@
+import type { Object3D } from 'three';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 
 export interface Planet {
@@ -20,7 +21,7 @@ export interface CelestialObject {
   name: string;
   additionalObjects: Array<AdditionalObject> | null;
   distanceFromPrimary?: number;
-  sizeDiffFromPrimary?: number;
+  radius?: number;
   classification: Classification;
   theta?: number;
   dTheta?: number;
@@ -29,8 +30,8 @@ export interface CelestialObject {
 export type AdditionalObject = Omit<CelestialObject, 'additionalObjects'>;
 
 export interface PreparedOject {
-  data: GLTF;
+  data: Object3D;
   theta: number;
   dTheta: number;
-  distanceFromPrimary: number;
+  startX: number;
 }

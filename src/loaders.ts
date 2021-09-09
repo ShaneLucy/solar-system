@@ -1,7 +1,7 @@
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { CubeTextureLoader } from 'three';
 import type { Planet } from './types/index';
-import { errors, loadingPercent, backgroundTexture } from './store';
+import { loadingPercent, backgroundTexture } from './store';
 import { backgroundImages } from './config';
 
 const gltfLoader = new GLTFLoader();
@@ -11,14 +11,11 @@ const cubeLoader = new CubeTextureLoader();
 cubeLoader.setPath('assets/backgrounds/');
 
 export const loadModel = async (name: string): Promise<GLTF> => {
-  let model;
-  try {
-    model = gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
-      loadingPercent.set(Math.round((xhr.loaded / xhr.total) * 100));
-    });
-  } catch (error) {
-    errors.update((val) => [...val, error]);
-  }
+  const totalPercent = 100;
+  const model = await gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
+    loadingPercent.set(Math.round((xhr.loaded / xhr.total) * totalPercent));
+  });
+
   return model;
 };
 

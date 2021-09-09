@@ -335,7 +335,7 @@ const celestialObjects: Array<CelestialObject> = [
     name: 'eris',
     additionalObjects: [],
     classification: ClassificationEnum.DwarfPlanet,
-    distanceFromPrimary: 35.4,
+    distanceFromPrimary: 140_000_000,
     radius: 31.855,
     theta: 0,
     dTheta: 0

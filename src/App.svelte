@@ -42,13 +42,13 @@
         classification={object.classification}
       />
     </Route>
-    {#if object.additionalObjects !== null}
+    {#if object.additionalObjects.length > 0}
       {#each object.additionalObjects as additionalObject}
         <Route path={`/${additionalObject.name}`}>
           <CelestialObjectGenerator
             name={additionalObject.name}
             radius={additionalObject.radius}
-            additionalObjects={null}
+            additionalObjects={[]}
             classification={additionalObject.classification}
           />
         </Route>

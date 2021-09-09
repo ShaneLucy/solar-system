@@ -1,5 +1,7 @@
 import type { CelestialObject, AdditionalObject } from './types/index';
 
+import { ClassificationEnum } from './types/index';
+
 export const backgroundImages: Array<string> = [
   'px.png',
   'nx.png',
@@ -15,24 +17,30 @@ export const backgroundImages: Array<string> = [
 const celestialObjects: Array<CelestialObject> = [
   {
     name: 'sun',
-    additionalObjects: null,
-    classification: 'Star',
+    additionalObjects: [],
+    classification: ClassificationEnum.Star,
     distanceFromPrimary: 0,
-    radius: 6960
+    radius: 6_960,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'mercury',
-    additionalObjects: null,
-    classification: 'Planet',
-    distanceFromPrimary: 502500,
-    radius: 31.855
+    additionalObjects: [],
+    classification: ClassificationEnum.Planet,
+    distanceFromPrimary: 502_500,
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'venus',
-    additionalObjects: null,
-    classification: 'Planet',
+    additionalObjects: [],
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 1082089,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'earth',
@@ -41,18 +49,24 @@ const celestialObjects: Array<CelestialObject> = [
       //   name: 'iss',
       //   distanceFromPrimary: 3.54,
       //   radius: 31.855,
-      //   classification: 'Man Made Satelite'
+      //   classification: ClassificationEnum.Satellite,
+      //   theta: 0,
+      //   dTheta: 0
       // },
       {
         name: 'luna',
         distanceFromPrimary: 4_056,
         radius: 17.4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 1_495_978,
-    radius: 63.78
+    radius: 63.78,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'mars',
@@ -61,30 +75,40 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'odyssey',
         distanceFromPrimary: 2_000,
         radius: 1,
-        classification: 'Man Made Satelite'
+        classification: ClassificationEnum.Satellite,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'maven',
         distanceFromPrimary: 4_000,
         radius: 1,
-        classification: 'Man Made Satelite'
+        classification: ClassificationEnum.Satellite,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'deimos',
         distanceFromPrimary: 5_000,
         radius: 1,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'phobos',
-        distanceFromPrimary: 7_000,
+        distanceFromPrimary: 5_000,
         radius: 1,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'jupiter',
@@ -93,36 +117,48 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'juno',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Man Made Satelite'
+        classification: ClassificationEnum.Satellite,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'callisto',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'europa',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'ganymede',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'io',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'saturn',
@@ -131,48 +167,64 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'cassini',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Man Made Satelite'
+        classification: ClassificationEnum.Satellite,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'enceladus',
         distanceFromPrimary: 6_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'titan',
         distanceFromPrimary: 7_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'dione',
         distanceFromPrimary: 8_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'hyperion',
         distanceFromPrimary: 9_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'lapetus',
         distanceFromPrimary: 10_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'mimas',
         distanceFromPrimary: 11_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'uranus',
@@ -181,30 +233,40 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'ariel',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'oberon',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'titania',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       },
       {
         name: 'umbriel',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'neptune',
@@ -213,12 +275,16 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'triton',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Planet',
+    classification: ClassificationEnum.Planet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'pluto',
@@ -227,73 +293,88 @@ const celestialObjects: Array<CelestialObject> = [
         name: 'charon',
         distanceFromPrimary: 5_000,
         radius: 4,
-        classification: 'Moon'
+        classification: ClassificationEnum.Moon,
+        theta: 0,
+        dTheta: 0
       }
     ],
-    classification: 'Dwarf Planet',
+    classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'ceres',
-    additionalObjects: null,
-    classification: 'Dwarf Planet',
+    additionalObjects: [],
+    classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'makemake',
-    additionalObjects: null,
-    classification: 'Dwarf Planet',
+    additionalObjects: [],
+    classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'haumea',
-    additionalObjects: null,
-    classification: 'Dwarf Planet',
+    additionalObjects: [],
+    classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   },
   {
     name: 'eris',
-    additionalObjects: null,
-    classification: 'Dwarf Planet',
+    additionalObjects: [],
+    classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
-    radius: 31.855
+    radius: 31.855,
+    theta: 0,
+    dTheta: 0
   }
 ];
 
 /**
  * Sets the starting theta and dTheta values for each planet
  */
-const setThetas = (
-  value: CelestialObject | AdditionalObject
-): Array<number> => {
-  const dTheta = (2 * Math.PI) / value.distanceFromPrimary;
+const setDTheta = (distanceFromPrimary: number): number => {
+  const dTheta = (2 * Math.PI) / distanceFromPrimary;
 
-  return [dTheta, 0];
+  return dTheta;
 };
 
 /**
  * Sets the completed array of celestial objects
  */
 const config = (): Array<CelestialObject> => {
-  celestialObjects.forEach((value, index) => {
-    if (value.additionalObjects !== null) {
-      value.additionalObjects.forEach((val, idx) => {
-        [
-          celestialObjects[index].additionalObjects[idx].dTheta,
-          celestialObjects[index].additionalObjects[idx].theta
-        ] = setThetas(val);
-      });
-    }
+  const completedObjects: Array<CelestialObject> = celestialObjects.map(
+    (value) => {
+      let completedAdditionalObject: Array<AdditionalObject> = [];
+      completedAdditionalObject = value.additionalObjects.map((val) => {
+        const childDTheta = setDTheta(val.distanceFromPrimary);
+        const childResult = { ...val, dTheta: childDTheta };
 
-    [celestialObjects[index].dTheta, celestialObjects[index].theta] = setThetas(
-      value
-    );
-  });
-  return celestialObjects;
+        return childResult;
+      });
+
+      const dTheta = setDTheta(value.distanceFromPrimary);
+      const result = { ...value, dTheta };
+
+      result.additionalObjects = [...completedAdditionalObject];
+
+      return result;
+    }
+  );
+
+  return completedObjects;
 };
 
-export const completedCelestialObjects: Array<CelestialObject> = config();
+export const completedCelestialObjects = config();

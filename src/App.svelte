@@ -28,6 +28,7 @@
   <Route path="/">
     <CelestialObjectGenerator
       name={completedCelestialObjects[0].name}
+      isSolarSystem={true}
       radius={completedCelestialObjects[0].radius}
       additionalObjects={completedCelestialObjects}
       classification={completedCelestialObjects[0].classification}
@@ -37,6 +38,7 @@
     <Route path={`/${object.name}`}>
       <CelestialObjectGenerator
         name={object.name}
+        isSolarSystem={false}
         radius={object.radius}
         additionalObjects={object.additionalObjects}
         classification={object.classification}
@@ -47,6 +49,7 @@
         <Route path={`/${additionalObject.name}`}>
           <CelestialObjectGenerator
             name={additionalObject.name}
+            isSolarSystem={false}
             radius={additionalObject.radius}
             additionalObjects={[]}
             classification={additionalObject.classification}

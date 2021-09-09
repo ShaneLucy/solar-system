@@ -10,21 +10,24 @@ export interface Planet {
   scale?: number;
 }
 
-type Classification =
-  | 'Star'
-  | 'Planet'
-  | 'Dwarf Planet'
-  | 'Moon'
-  | 'Man Made Satelite';
+type Classification = 'Star' | 'Planet' | 'Dwarf Planet' | 'Moon' | 'Satellite';
+
+export enum ClassificationEnum {
+  Star = 'Star',
+  Planet = 'Planet',
+  DwarfPlanet = 'Dwarf Planet',
+  Moon = 'Moon',
+  Satellite = 'Satellite'
+}
 
 export interface CelestialObject {
   name: string;
-  additionalObjects: Array<AdditionalObject> | null;
-  distanceFromPrimary?: number;
-  radius?: number;
+  additionalObjects: Array<AdditionalObject> | [];
+  distanceFromPrimary: number;
+  radius: number;
   classification: Classification;
-  theta?: number;
-  dTheta?: number;
+  theta: number;
+  dTheta: number;
 }
 
 export type AdditionalObject = Omit<CelestialObject, 'additionalObjects'>;

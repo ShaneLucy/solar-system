@@ -32,6 +32,7 @@
   } from '../types/index';
 
   export let name: string;
+  export let isSolarSystem: boolean;
   export let radius: number;
   export let additionalObjects:
     | Array<AdditionalObject>
@@ -43,7 +44,7 @@
 
   let renderer: WebGLRenderer;
 
-  const sceneMaxSize = getMaxSize(name);
+  const sceneMaxSize = getMaxSize(name, isSolarSystem);
   const sceneMinSize = getMinSize(name);
 
   const camera = configCamera(100, 1, 2_000_000, 120);

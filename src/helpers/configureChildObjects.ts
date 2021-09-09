@@ -5,7 +5,6 @@ import scalingFactor from './scaling';
 import {
   objectsToLoad,
   loadedObjects,
-  errors,
   additionalLoadingComplete,
   showAdditionalLoader
 } from '../store';
@@ -19,7 +18,6 @@ const showLoader = (): void => {
 
 const setObjectsToLoad = (childObjects: Array<AdditionalObject>): void => {
   showLoader();
-
   childObjects.forEach((childObject) => {
     objectsToLoad.update((val) => [...val, childObject.name]);
   });
@@ -30,11 +28,13 @@ const setLoadedObjects = (name: string): void => {
 };
 
 const hideLoader = (): void => {
+  const transitionDuation = 1_500;
   additionalLoadingComplete.set(true);
+
   setTimeout(() => {
     loadedObjects.set([]);
     objectsToLoad.set([]);
-  }, 1_500);
+  }, transitionDuation);
 };
 
 export default async (
@@ -45,19 +45,13 @@ export default async (
   const preparedObjects: Array<PreparedOject> = await Promise.all(
     childObjects.map(
       async (object): Promise<PreparedOject> => {
-        let model;
-        try {
-          model = await loadModel(object.name);
-        } catch (error) {
-          errors.update((val) => [...val, error]);
-        }
+        const model = await loadModel(object.name);
+
         const object3d = new Object3D();
         object3d.add(model.scene);
-
         object3d.scale.set(
           ...scalingFactor(object3d, object.radius, model.scene.scale.x)
         );
-
         object3d.position.setX(object.distanceFromPrimary);
 
         const preparedObject: PreparedOject = {
@@ -66,8 +60,6 @@ export default async (
           dTheta: object.dTheta,
           startX: object.distanceFromPrimary
         };
-
-        object3d.position.setX(object.distanceFromPrimary);
 
         setLoadedObjects(object.name);
 

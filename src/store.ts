@@ -1,7 +1,8 @@
 import { writable } from 'svelte/store';
 import type { CubeTexture } from 'three';
 
-export const errors = writable([]);
+// TODO type errors object
+export const errors = writable<Array<any>>([]);
 
 export const loadingPercent = writable<number>(0);
 export const loadingStatus = writable<boolean>(true);

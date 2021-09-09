@@ -1,21 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { loadModel } from '../loaders';
-  import { Object3D, Box3 } from 'three';
 
-  import {
-    loadingStatus,
-    loadingMessage,
-    loadingPercent,
-    errors
-  } from '../store';
+  import { Object3D, WebGLRenderer } from 'three';
+
   import LoadingScreen from '../components/LoadingScreen.svelte';
   import HeadConfig from '../components/HeadConfig.svelte';
-  import calcOrbit from '../calculations';
-  import ResizeCanvas from '../components/ResizeCanvas.svelte';
-  import type { AdditionalObject, PreparedOject } from '../types/index';
-
   import Hud from '../components/hud/Hud.svelte';
+
+  import calcOrbit from '../calculations';
+  import { loadModel } from '../loaders';
 
   import scene from '../scene-config/scene';
   import configRenderer from '../scene-config/renderer';
@@ -23,17 +16,38 @@
   import configControls from '../scene-config/controls';
   import scalingFactor from '../helpers/scaling';
   import configureChildObjects from '../helpers/configureChildObjects';
+  import { getMaxSize, getMinSize } from '../helpers/getSceneDimensions';
+
+  import {
+    loadingStatus,
+    loadingMessage,
+    loadingPercent,
+    errors
+  } from '../store';
+
+  import type {
+    AdditionalObject,
+    CelestialObject,
+    PreparedOject
+  } from '../types/index';
 
   export let name: string;
+  export let isSolarSystem: boolean;
   export let radius: number;
-  export let additionalObjects: Array<AdditionalObject> | null;
+  export let additionalObjects:
+    | Array<AdditionalObject>
+    | Array<CelestialObject>
+    | [];
   export let classification: string;
 
   let canvas: HTMLCanvasElement;
 
-  let renderer;
+  let renderer: WebGLRenderer;
 
-  const camera = configCamera(7_500);
+  const sceneMaxSize = getMaxSize(name, isSolarSystem);
+  const sceneMinSize = getMinSize(name);
+
+  const camera = configCamera(100, 1, 2_000_000, 120);
 
   console.log(classification);
 
@@ -62,7 +76,12 @@
 
     scene.add(object3d);
 
-    const controls = configControls(camera, renderer.domElement);
+    const controls = configControls(
+      camera,
+      renderer.domElement,
+      sceneMinSize,
+      sceneMaxSize
+    );
 
     function animate() {
       requestAnimationFrame(animate);
@@ -90,9 +109,15 @@
       });
     }
   });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 </script>
 
-<ResizeCanvas {camera} {renderer} />
 <HeadConfig {name} />
 <LoadingScreen />
 

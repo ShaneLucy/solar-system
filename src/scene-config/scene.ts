@@ -5,7 +5,7 @@ import { backgroundTexture } from '../store';
 const configureScene = (): Scene => {
   const scene = new Scene();
 
-  scene.add(light(100, 1_000, 100));
+  scene.add(light());
 
   backgroundTexture.subscribe((value) => {
     scene.background = value;

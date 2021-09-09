@@ -1,14 +1,19 @@
 import { PerspectiveCamera } from 'three';
 
-export default (z: number): PerspectiveCamera => {
+export default (
+  fov: number,
+  nearPlane: number,
+  farPlane: number,
+  startZ: number
+): PerspectiveCamera => {
   const camera = new PerspectiveCamera(
-    100,
+    fov,
     window.innerWidth / window.innerHeight,
-    0.1,
-    2_000_000
+    nearPlane,
+    farPlane
   );
 
-  camera.position.setZ(z);
+  camera.position.setZ(startZ);
 
   return camera;
 };

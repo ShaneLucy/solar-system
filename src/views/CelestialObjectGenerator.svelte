@@ -55,7 +55,10 @@
 
   onMount(async () => {
     loadingStatus.set(true);
-    loadingMessage.set(`Generating ${name}`);
+    const initialLoadingMessage = isSolarSystem
+      ? `Generateing Solar System`
+      : `Generating ${name}`;
+    loadingMessage.set(initialLoadingMessage);
     loadingPercent.set(0);
 
     renderer = configRenderer(canvas);
@@ -118,7 +121,12 @@
   });
 </script>
 
-<HeadConfig {name} />
+{#if isSolarSystem}
+  <HeadConfig name={'solar-system'} />
+{:else}
+  <HeadConfig {name} />
+{/if}
+
 <LoadingScreen />
 
 <Hud />

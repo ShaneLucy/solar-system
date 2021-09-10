@@ -13,9 +13,6 @@ const calcOrbit = (startX: number, theta: number, dTheta: number) => {
 
 export default calcOrbit;
 
-/**
- * TODO get orbit lines
- */
 
 // TODO orbital speed calculation
 /**

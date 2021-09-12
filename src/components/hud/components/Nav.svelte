@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Link } from 'svelte-routing';
   import { fly } from 'svelte/transition';
-  import { completedCelestialObjects } from '../../../config';
+  import { completedCelestialObjects } from '../../../scene-config';
   import { showNavBar } from '../../../store';
 </script>
 

@@ -7,16 +7,21 @@
   import HeadConfig from '../components/HeadConfig.svelte';
   import Hud from '../components/hud/Hud.svelte';
 
-  import calcOrbit from '../calculations';
-  import { loadModel } from '../loaders';
+  import {
+    calcOrbit,
+    getMaxSize,
+    getMinSize,
+    configureChildObjects,
+    loadModel,
+    scalingFactor
+  } from '../helpers';
 
-  import scene from '../scene-config/scene';
-  import configRenderer from '../scene-config/renderer';
-  import configCamera from '../scene-config/camera';
-  import configControls from '../scene-config/controls';
-  import scalingFactor from '../helpers/scaling';
-  import configureChildObjects from '../helpers/configureChildObjects';
-  import { getMaxSize, getMinSize } from '../helpers/getSceneDimensions';
+  import {
+    configCamera,
+    configRenderer,
+    configScene,
+    configControls
+  } from '../scene-config/index';
 
   import {
     loadingStatus,
@@ -41,13 +46,13 @@
   export let classification: string;
 
   let canvas: HTMLCanvasElement;
-
   let renderer: WebGLRenderer;
 
   const sceneMaxSize = getMaxSize(name, isSolarSystem);
   const sceneMinSize = getMinSize(name);
 
   const camera = configCamera(100, 1, 2_000_000, 120);
+  const scene = configScene();
 
   console.log(classification);
 

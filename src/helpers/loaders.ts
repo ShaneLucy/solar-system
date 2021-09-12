@@ -1,8 +1,7 @@
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { CubeTextureLoader } from 'three';
-import type { Planet } from './types/index';
-import { loadingPercent, backgroundTexture } from './store';
-import { backgroundImages } from './config';
+import { loadingPercent, backgroundTexture } from '../store';
+import { backgroundImages } from '../scene-config';
 
 const gltfLoader = new GLTFLoader();
 gltfLoader.setPath('assets/models/');
@@ -17,21 +16,6 @@ export const loadModel = async (name: string): Promise<GLTF> => {
   });
 
   return model;
-};
-
-export const setPlanets = async (
-  celestialObjects: Array<string>
-): Promise<Array<Planet>> => {
-  const setObjects = await Promise.all(
-    celestialObjects.map(async (celestialObject) => {
-      const object = {
-        data: await loadModel(celestialObject),
-        name: celestialObject
-      };
-      return object;
-    })
-  );
-  return setObjects;
 };
 
 /**

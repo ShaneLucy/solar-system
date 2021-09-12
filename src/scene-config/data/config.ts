@@ -1,6 +1,5 @@
-import type { CelestialObject, AdditionalObject } from './types/index';
-
-import { ClassificationEnum } from './types/index';
+import type { CelestialObject, AdditionalObject } from '../../types/index';
+import { ClassificationEnum } from '../../types/index';
 
 export const backgroundImages: Array<string> = [
   'px.png',

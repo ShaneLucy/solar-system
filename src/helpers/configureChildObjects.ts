@@ -1,7 +1,8 @@
 import { Object3D } from 'three';
 
-import { loadModel } from '../loaders';
 import scalingFactor from './scaling';
+import { loadModel } from './loaders';
+
 import {
   objectsToLoad,
   loadedObjects,

@@ -13,7 +13,6 @@ const calcOrbit = (startX: number, theta: number, dTheta: number) => {
 
 export default calcOrbit;
 
-
 // TODO orbital speed calculation
 /**
  * Planet Rotations

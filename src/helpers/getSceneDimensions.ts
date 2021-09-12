@@ -1,5 +1,5 @@
 import type { AdditionalObject, CelestialObject } from '../types';
-import { completedCelestialObjects } from '../config';
+import { completedCelestialObjects } from '../scene-config';
 
 const filterObjectsByname = (name: string) => {
   let isAdditional: AdditionalObject | undefined;

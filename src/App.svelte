@@ -2,8 +2,8 @@
   import { Router, Route } from 'svelte-routing';
   import CelestialObjectGenerator from './views/CelestialObjectGenerator.svelte';
   import E404 from './components/E404.svelte';
-  import { completedCelestialObjects } from './config';
-  import { setBackgroundTexture } from './loaders';
+  import { completedCelestialObjects } from './scene-config';
+  import { setBackgroundTexture } from './helpers';
   import { onMount } from 'svelte';
 
   export let url = '';

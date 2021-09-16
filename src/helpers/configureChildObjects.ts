@@ -56,7 +56,8 @@ const hideLoader = (): void => {
 };
 
 const generatePreparedObject = async (
-  object: AdditionalObject | CelestialObject
+  object: AdditionalObject | CelestialObject,
+  parentRadius: number
 ): Promise<PreparedOject> => {
   const model = await loadModel(object.name);
   const object3d = new Object3D();
@@ -71,21 +72,22 @@ const generatePreparedObject = async (
     data: object3d,
     theta: object.theta,
     dTheta: object.dTheta,
-    startX: object.distanceFromPrimary
+    startX: object.distanceFromPrimary + parentRadius
   };
 
   return preparedObject;
 };
 
 export default async (
-  childObjects: Array<AdditionalObject> | Array<CelestialObject>
+  childObjects: Array<AdditionalObject> | Array<CelestialObject>,
+  parentRadius: number
 ): Promise<Array<PreparedOject>> => {
   setObjectsToLoad(childObjects);
 
   const preparedObjects: Array<PreparedOject> = await Promise.all(
     childObjects.map(
       async (object): Promise<PreparedOject> => {
-        const preparedObject = generatePreparedObject(object);
+        const preparedObject = generatePreparedObject(object, parentRadius);
 
         setLoadedObjects(object.name);
 
@@ -93,7 +95,8 @@ export default async (
           object.additionalObjects.map(
             async (additionalObject): Promise<PreparedOject> => {
               const preparedChildObjects = generatePreparedObject(
-                additionalObject
+                additionalObject,
+                parentRadius
               );
 
               setLoadedObjects(additionalObject.name);

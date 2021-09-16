@@ -110,7 +110,7 @@
     animate();
 
     if (additionalObjects !== null) {
-      preparedObjects = await configureChildObjects(additionalObjects);
+      preparedObjects = await configureChildObjects(additionalObjects, radius);
 
       preparedObjects.forEach((childObject) => {
         scene.add(childObject.data);

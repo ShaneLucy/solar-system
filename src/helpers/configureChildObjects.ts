@@ -31,8 +31,8 @@ const setObjectsToLoad = (
 
       completedLoad = [...completedLoad, childObject.name];
 
-      if ('additionalObjects' in childObject) {
-        childObject.additionalObjects.forEach((additionalObject) => {
+      if ('childObjects' in childObject) {
+        childObject.childObjects.forEach((additionalObject) => {
           completedLoad = [...completedLoad, additionalObject.name];
         });
       }
@@ -91,8 +91,8 @@ export default async (
 
         setLoadedObjects(object.name);
 
-        if ('additionalObjects' in object) {
-          object.additionalObjects.map(
+        if ('childObjects' in object) {
+          object.childObjects.map(
             async (additionalObject): Promise<PreparedOject> => {
               const preparedChildObjects = generatePreparedObject(
                 additionalObject,

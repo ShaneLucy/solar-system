@@ -25,8 +25,8 @@
     <Link to={`/${object.name}`}>
       {object.name}
     </Link>
-    {#if object.additionalObjects !== null}
-      {#each object.additionalObjects as additionalObject}
+    {#if object.childObjects !== null}
+      {#each object.childObjects as additionalObject}
         <Link to={`/${additionalObject.name}`}>
           {additionalObject.name}
         </Link>

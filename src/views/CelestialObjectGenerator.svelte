@@ -39,7 +39,7 @@
   export let name: string;
   export let isSolarSystem: boolean;
   export let radius: number;
-  export let additionalObjects:
+  export let childObjects:
     | Array<AdditionalObject>
     | Array<CelestialObject>
     | [];
@@ -68,21 +68,21 @@
 
     renderer = configRenderer(canvas);
 
-    const planet = await loadModel(name);
-    const object3d = new Object3D();
+    const parentModel = await loadModel(name);
+    const parentObject = new Object3D();
     loadingMessage.set('Generating Scene');
 
     try {
-      object3d.add(planet.scene);
+      parentObject.add(parentModel.scene);
     } catch (error) {
       errors.update((val) => [...val, error]);
     }
 
-    object3d.scale.set(
-      ...scalingFactor(object3d, radius, planet.scene.scale.x)
+    parentObject.scale.set(
+      ...scalingFactor(parentObject, radius, parentModel.scene.scale.x)
     );
 
-    scene.add(object3d);
+    scene.add(parentObject);
 
     const controls = configControls(
       camera,
@@ -109,8 +109,8 @@
     loadingStatus.set(false);
     animate();
 
-    if (additionalObjects !== null) {
-      preparedObjects = await configureChildObjects(additionalObjects, radius);
+    if (childObjects !== null) {
+      preparedObjects = await configureChildObjects(childObjects, radius);
 
       preparedObjects.forEach((childObject) => {
         scene.add(childObject.data);

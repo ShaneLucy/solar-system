@@ -16,7 +16,7 @@ export const backgroundImages: Array<string> = [
 const celestialObjects: Array<CelestialObject> = [
   {
     name: 'sun',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.Star,
     distanceFromPrimary: 0,
     radius: 6_960,
@@ -25,7 +25,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'mercury',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.Planet,
     distanceFromPrimary: 502_500,
     radius: 31.855,
@@ -34,7 +34,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'venus',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.Planet,
     distanceFromPrimary: 1082089,
     radius: 31.855,
@@ -43,7 +43,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'earth',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'iss',
         distanceFromPrimary: 4.15,
@@ -69,7 +69,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'mars',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'odyssey',
         distanceFromPrimary: 2_000,
@@ -111,7 +111,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'jupiter',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'juno',
         distanceFromPrimary: 5_000,
@@ -161,7 +161,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'saturn',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'cassini',
         distanceFromPrimary: 5_000,
@@ -227,7 +227,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'uranus',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'ariel',
         distanceFromPrimary: 5_000,
@@ -269,7 +269,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'neptune',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'triton',
         distanceFromPrimary: 5_000,
@@ -287,7 +287,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'pluto',
-    additionalObjects: [
+    childObjects: [
       {
         name: 'charon',
         distanceFromPrimary: 5_000,
@@ -305,7 +305,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'ceres',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
     radius: 31.855,
@@ -314,7 +314,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'makemake',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
     radius: 31.855,
@@ -323,7 +323,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'haumea',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 35.4,
     radius: 31.855,
@@ -332,7 +332,7 @@ const celestialObjects: Array<CelestialObject> = [
   },
   {
     name: 'eris',
-    additionalObjects: [],
+    childObjects: [],
     classification: ClassificationEnum.DwarfPlanet,
     distanceFromPrimary: 140_000_000,
     radius: 31.855,
@@ -357,7 +357,7 @@ const config = (): Array<CelestialObject> => {
   const completedObjects: Array<CelestialObject> = celestialObjects.map(
     (value) => {
       let completedAdditionalObject: Array<AdditionalObject> = [];
-      completedAdditionalObject = value.additionalObjects.map((val) => {
+      completedAdditionalObject = value.childObjects.map((val) => {
         const childDTheta = setDTheta(val.distanceFromPrimary);
         const childResult = { ...val, dTheta: childDTheta };
 
@@ -367,7 +367,7 @@ const config = (): Array<CelestialObject> => {
       const dTheta = setDTheta(value.distanceFromPrimary);
       const result = { ...value, dTheta };
 
-      result.additionalObjects = [...completedAdditionalObject];
+      result.childObjects = [...completedAdditionalObject];
 
       return result;
     }

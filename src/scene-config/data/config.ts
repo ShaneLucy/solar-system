@@ -44,14 +44,14 @@ const celestialObjects: Array<CelestialObject> = [
   {
     name: 'earth',
     additionalObjects: [
-      // {
-      //   name: 'iss',
-      //   distanceFromPrimary: 3.54,
-      //   radius: 31.855,
-      //   classification: ClassificationEnum.Satellite,
-      //   theta: 0,
-      //   dTheta: 0
-      // },
+      {
+        name: 'iss',
+        distanceFromPrimary: 4.15,
+        radius: 0.001,
+        classification: ClassificationEnum.Satellite,
+        theta: 0,
+        dTheta: 0
+      },
       {
         name: 'luna',
         distanceFromPrimary: 4_056,

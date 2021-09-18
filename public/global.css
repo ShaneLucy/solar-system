@@ -10,44 +10,29 @@ body {
 	padding: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
 		'Helvetica Neue', sans-serif;
+	overflow-x: hidden;
 }
 
 a {
-	color: white;	
+	color: #EDEDED;	
 	text-decoration: none;
+	text-transform: capitalize;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	opacity: 50;
+}
+
+a:active {
+	color: #444444
 }
 
 label {
 	display: block;
-}
-
-button {
-	font-family: inherit;
-	font-size: inherit;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
-	border: 1px solid #ccc;
-	border-radius: 2px;
-	color: #333;
-	background-color: #f4f4f4;
-	outline: none;
-}
-
-input:disabled {
-	color: #ccc;
-}
-
-
-button:disabled {
-	color: #999;
-}
-
-button:not(:disabled):active {
-	background-color: #ddd;
-}
-
-button:focus {
-	border-color: #666;
 }
 
 canvas {
@@ -61,6 +46,7 @@ svg {
 	height: 2.5rem;
 	padding-top: 0.45rem;
 	cursor: pointer;
+	color: #EDEDED;
 }
 
 aside {
@@ -68,12 +54,17 @@ aside {
 	z-index: 700;
 	width: max-content;
 	height: max-content;
-	background-color: #212121;
-	color: white;
+	background-color: #171717;
+	color: #EDEDED;
 }
 
 header {
 	display: flex;
 	align-items: center;
 	
+}
+
+h4 {
+	margin-bottom: 0;
+	color: #ff0040;
 }

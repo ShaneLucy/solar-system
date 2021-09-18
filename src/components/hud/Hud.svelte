@@ -3,7 +3,8 @@
     additionalLoadingComplete,
     objectsToLoad,
     showAdditionalLoader,
-    showNavBar
+    showNavBar,
+    initialSceneGenerated
   } from '../../store';
 
   import { fade } from 'svelte/transition';
@@ -11,23 +12,25 @@
   import Nav from './components/Nav.svelte';
 </script>
 
-{#if !$showNavBar}
-  <svg
-    class="left-menu-icon"
-    fill="none"
-    stroke="currentColor"
-    on:click={() => showNavBar.set(!$showNavBar)}
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    ><path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M4 6h16M4 12h16M4 18h7"
-    /></svg
-  >
-{:else}
-  <Nav />
+{#if $initialSceneGenerated}
+  {#if !$showNavBar}
+    <svg
+      class="left-menu-icon"
+      fill="none"
+      stroke="currentColor"
+      on:click={() => showNavBar.set(!$showNavBar)}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 6h16M4 12h16M4 18h7"
+      /></svg
+    >
+  {:else}
+    <Nav />
+  {/if}
 {/if}
 
 {#if !$additionalLoadingComplete}
@@ -58,7 +61,6 @@
 
 <style>
   svg {
-    color: white;
     z-index: 500;
     position: absolute;
   }
@@ -78,8 +80,6 @@
     padding-right: 0.45rem;
     position: absolute;
     right: 0;
-    color: white;
     z-index: 500;
-    font-size: 1.25rem;
   }
 </style>

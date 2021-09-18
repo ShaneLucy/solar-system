@@ -4,6 +4,8 @@ import type { CubeTexture } from 'three';
 // TODO type errors object
 export const errors = writable<Array<any>>([]);
 
+export const initialSceneGenerated = writable<boolean>(false);
+
 export const loadingPercent = writable<number>(0);
 export const loadingStatus = writable<boolean>(true);
 export const loadingMessage = writable<string>('Downloading Textures');

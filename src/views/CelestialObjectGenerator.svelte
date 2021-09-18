@@ -27,7 +27,10 @@
     loadingStatus,
     loadingMessage,
     loadingPercent,
-    errors
+    errors,
+    showNavBar,
+    showAdditionalLoader,
+    initialSceneGenerated
   } from '../store';
 
   import type {
@@ -61,7 +64,7 @@
   onMount(async () => {
     loadingStatus.set(true);
     const initialLoadingMessage = isSolarSystem
-      ? `Generateing Solar System`
+      ? `Generating Solar System`
       : `Generating ${name}`;
     loadingMessage.set(initialLoadingMessage);
     loadingPercent.set(0);
@@ -108,6 +111,7 @@
 
     loadingStatus.set(false);
     animate();
+    initialSceneGenerated.set(true);
 
     if (childObjects !== null) {
       preparedObjects = await configureChildObjects(childObjects, radius);
@@ -124,6 +128,11 @@
 
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
+
+  function toggleUI() {
+    showNavBar.set(false);
+    showAdditionalLoader.set(false);
+  }
 </script>
 
 {#if isSolarSystem}
@@ -136,7 +145,7 @@
 
 <Hud />
 <main>
-  <canvas id="background" bind:this={canvas} />
+  <canvas on:click={toggleUI} id="background" bind:this={canvas} />
 </main>
 
 <style>

@@ -27,10 +27,6 @@ a:visited {
 	opacity: 50;
 }
 
-a:active {
-	color: #444444
-}
-
 label {
 	display: block;
 }

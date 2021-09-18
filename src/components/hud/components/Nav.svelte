@@ -38,9 +38,12 @@
     >
   </header>
   <nav>
-    <Link on:click={() => showNavBar.set(!$showNavBar)} to="/"
-      >Solar System</Link
+    <Link on:click={() => showNavBar.set(!$showNavBar)} to="/">
+      <span class:active={window.location.pathname === '/'}>
+        Solar System</span
+      ></Link
     >
+
     {#each classifications as classification}
       <h4>{classification}</h4>
 
@@ -50,7 +53,11 @@
             on:click={() => showNavBar.set(!$showNavBar)}
             to={`/${object.name}`}
           >
-            {object.name}
+            <span
+              class:active={window.location.pathname.slice(1) === object.name}
+            >
+              {object.name}
+            </span>
           </Link>
         {/if}
         {#if object.childObjects.length > 0}
@@ -60,7 +67,12 @@
                 on:click={() => showNavBar.set(!$showNavBar)}
                 to={`/${additionalObject.name}`}
               >
-                {additionalObject.name}
+                <span
+                  class:active={window.location.pathname.slice(1) ===
+                    additionalObject.name}
+                >
+                  {additionalObject.name}
+                </span>
               </Link>
             {/if}
           {/each}
@@ -87,5 +99,9 @@
     display: flex;
     flex-direction: column;
     padding: 1.25rem 2rem;
+  }
+
+  .active {
+    color: #fec260;
   }
 </style>

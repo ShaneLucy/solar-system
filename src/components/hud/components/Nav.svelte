@@ -3,6 +3,22 @@
   import { fly } from 'svelte/transition';
   import { completedCelestialObjects } from '../../../scene-config';
   import { showNavBar } from '../../../store';
+
+  const classifications: Array<string> = [];
+
+  completedCelestialObjects.forEach((object) => {
+    if (!classifications.includes(object.classification)) {
+      classifications.push(object.classification);
+    }
+
+    if (object.childObjects.length > 0) {
+      object.childObjects.forEach((childObject) => {
+        if (!classifications.includes(childObject.classification)) {
+          classifications.push(childObject.classification);
+        }
+      });
+    }
+  });
 </script>
 
 <aside transition:fly={{ x: -200, duration: 1_250 }}>
@@ -21,18 +37,37 @@
       /></svg
     >
   </header>
-  {#each completedCelestialObjects as object}
-    <Link to={`/${object.name}`}>
-      {object.name}
-    </Link>
-    {#if object.childObjects !== null}
-      {#each object.childObjects as additionalObject}
-        <Link to={`/${additionalObject.name}`}>
-          {additionalObject.name}
-        </Link>
+  <nav>
+    <Link on:click={() => showNavBar.set(!$showNavBar)} to="/"
+      >Solar System</Link
+    >
+    {#each classifications as classification}
+      <h4>{classification}</h4>
+
+      {#each completedCelestialObjects as object}
+        {#if classification === object.classification}
+          <Link
+            on:click={() => showNavBar.set(!$showNavBar)}
+            to={`/${object.name}`}
+          >
+            {object.name}
+          </Link>
+        {/if}
+        {#if object.childObjects.length > 0}
+          {#each object.childObjects as additionalObject}
+            {#if classification === additionalObject.classification}
+              <Link
+                on:click={() => showNavBar.set(!$showNavBar)}
+                to={`/${additionalObject.name}`}
+              >
+                {additionalObject.name}
+              </Link>
+            {/if}
+          {/each}
+        {/if}
       {/each}
-    {/if}
-  {/each}
+    {/each}
+  </nav>
 </aside>
 
 <style>
@@ -46,5 +81,11 @@
 
   header {
     justify-content: flex-start;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 2rem;
   }
 </style>

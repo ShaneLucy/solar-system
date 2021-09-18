@@ -1,5 +1,5 @@
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-import { CubeTextureLoader } from 'three';
+import { CubeTextureLoader, sRGBEncoding } from 'three';
 import { loadingPercent, backgroundTexture } from '../store';
 import { backgroundImages } from '../scene-config';
 
@@ -19,8 +19,10 @@ export const loadModel = async (name: string): Promise<GLTF> => {
 };
 
 /**
- * Generates the background texture
+ * Generates the background texture and saves it in a store
  */
 export const setBackgroundTexture = (): void => {
-  backgroundTexture.set(cubeLoader.load(backgroundImages));
+  const texture = cubeLoader.load(backgroundImages);
+  texture.encoding = sRGBEncoding;
+  backgroundTexture.set(texture);
 };

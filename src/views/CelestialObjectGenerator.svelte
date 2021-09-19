@@ -7,22 +7,30 @@
   import HeadConfig from '../components/HeadConfig.svelte';
   import Hud from '../components/hud/Hud.svelte';
 
-  import calcOrbit from '../calculations';
-  import { loadModel } from '../loaders';
+  import {
+    calcOrbit,
+    getMaxSize,
+    getMinSize,
+    configureChildObjects,
+    loadModel,
+    scalingFactor
+  } from '../helpers';
 
-  import scene from '../scene-config/scene';
-  import configRenderer from '../scene-config/renderer';
-  import configCamera from '../scene-config/camera';
-  import configControls from '../scene-config/controls';
-  import scalingFactor from '../helpers/scaling';
-  import configureChildObjects from '../helpers/configureChildObjects';
-  import { getMaxSize, getMinSize } from '../helpers/getSceneDimensions';
+  import {
+    configCamera,
+    configRenderer,
+    configScene,
+    configControls
+  } from '../scene-config/index';
 
   import {
     loadingStatus,
     loadingMessage,
     loadingPercent,
-    errors
+    errors,
+    showNavBar,
+    showAdditionalLoader,
+    initialSceneGenerated
   } from '../store';
 
   import type {
@@ -34,20 +42,20 @@
   export let name: string;
   export let isSolarSystem: boolean;
   export let radius: number;
-  export let additionalObjects:
+  export let childObjects:
     | Array<AdditionalObject>
     | Array<CelestialObject>
     | [];
   export let classification: string;
 
   let canvas: HTMLCanvasElement;
-
   let renderer: WebGLRenderer;
 
   const sceneMaxSize = getMaxSize(name, isSolarSystem);
   const sceneMinSize = getMinSize(name);
 
   const camera = configCamera(100, 1, 2_000_000, 120);
+  const scene = configScene();
 
   console.log(classification);
 
@@ -55,26 +63,29 @@
 
   onMount(async () => {
     loadingStatus.set(true);
-    loadingMessage.set(`Generating ${name}`);
+    const initialLoadingMessage = isSolarSystem
+      ? `Generating Solar System`
+      : `Generating ${name}`;
+    loadingMessage.set(initialLoadingMessage);
     loadingPercent.set(0);
 
     renderer = configRenderer(canvas);
 
-    const planet = await loadModel(name);
-    const object3d = new Object3D();
+    const parentModel = await loadModel(name);
+    const parentObject = new Object3D();
     loadingMessage.set('Generating Scene');
 
     try {
-      object3d.add(planet.scene);
+      parentObject.add(parentModel.scene);
     } catch (error) {
       errors.update((val) => [...val, error]);
     }
 
-    object3d.scale.set(
-      ...scalingFactor(object3d, radius, planet.scene.scale.x)
+    parentObject.scale.set(
+      ...scalingFactor(parentObject, radius, parentModel.scene.scale.x)
     );
 
-    scene.add(object3d);
+    scene.add(parentObject);
 
     const controls = configControls(
       camera,
@@ -100,9 +111,10 @@
 
     loadingStatus.set(false);
     animate();
+    initialSceneGenerated.set(true);
 
-    if (additionalObjects !== null) {
-      preparedObjects = await configureChildObjects(additionalObjects);
+    if (childObjects !== null) {
+      preparedObjects = await configureChildObjects(childObjects, radius);
 
       preparedObjects.forEach((childObject) => {
         scene.add(childObject.data);
@@ -116,14 +128,24 @@
 
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
+
+  function toggleUI() {
+    showNavBar.set(false);
+    showAdditionalLoader.set(false);
+  }
 </script>
 
-<HeadConfig {name} />
+{#if isSolarSystem}
+  <HeadConfig name={'solar-system'} />
+{:else}
+  <HeadConfig {name} />
+{/if}
+
 <LoadingScreen />
 
 <Hud />
 <main>
-  <canvas id="background" bind:this={canvas} />
+  <canvas on:click={toggleUI} id="background" bind:this={canvas} />
 </main>
 
 <style>

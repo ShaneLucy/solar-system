@@ -22,7 +22,7 @@ export enum ClassificationEnum {
 
 export interface CelestialObject {
   name: string;
-  additionalObjects: Array<AdditionalObject> | [];
+  childObjects: Array<AdditionalObject> | [];
   distanceFromPrimary: number;
   radius: number;
   classification: Classification;
@@ -30,7 +30,7 @@ export interface CelestialObject {
   dTheta: number;
 }
 
-export type AdditionalObject = Omit<CelestialObject, 'additionalObjects'>;
+export type AdditionalObject = Omit<CelestialObject, 'childObjects'>;
 
 export interface PreparedOject {
   data: Object3D;
@@ -38,3 +38,5 @@ export interface PreparedOject {
   dTheta: number;
   startX: number;
 }
+
+export type NavDirection = 'column' | 'row';

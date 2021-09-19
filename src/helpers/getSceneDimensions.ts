@@ -1,11 +1,11 @@
 import type { AdditionalObject, CelestialObject } from '../types';
-import { completedCelestialObjects } from '../config';
+import { completedCelestialObjects } from '../scene-config';
 
 const filterObjectsByname = (name: string) => {
   let isAdditional: AdditionalObject | undefined;
   const isCelestial = completedCelestialObjects.find((object) => {
     if (isAdditional === undefined) {
-      isAdditional = object?.additionalObjects.find(
+      isAdditional = object?.childObjects.find(
         (element) => element.name === name
       );
     }
@@ -42,10 +42,10 @@ export const getMaxSize = (name: string, isSolarSystem: boolean) => {
 
   let maxDistance = 0;
   if (
-    'additionalObjects' in filteredObjects &&
-    filteredObjects.additionalObjects.length > 0
+    'childObjects' in filteredObjects &&
+    filteredObjects.childObjects.length > 0
   ) {
-    const distances = filteredObjects.additionalObjects.map(
+    const distances = filteredObjects.childObjects.map(
       (value) => value.distanceFromPrimary
     );
     maxDistance = Math.max.apply(null, distances);

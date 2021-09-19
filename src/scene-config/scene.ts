@@ -2,7 +2,7 @@ import { Scene } from 'three';
 import light from './light';
 import { backgroundTexture } from '../store';
 
-const configureScene = (): Scene => {
+export default (): Scene => {
   const scene = new Scene();
 
   scene.add(light());
@@ -13,5 +13,3 @@ const configureScene = (): Scene => {
 
   return scene;
 };
-
-export default configureScene();

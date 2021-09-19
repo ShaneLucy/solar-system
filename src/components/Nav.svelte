@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Link } from 'svelte-routing';
-  import { fly } from 'svelte/transition';
-  import { completedCelestialObjects } from '../../../scene-config';
-  import { showNavBar } from '../../../store';
+  import { completedCelestialObjects } from '../scene-config';
+
+  export let toggleNavBar: () => void;
 
   const classifications: Array<string> = [];
 
@@ -21,38 +21,20 @@
   });
 </script>
 
-<aside transition:fly={{ x: -200, duration: 1_250 }}>
-  <header>
-    <svg
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      on:click={() => showNavBar.set(!$showNavBar)}
-      xmlns="http://www.w3.org/2000/svg"
-      ><path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-      /></svg
-    >
-  </header>
-  <nav>
-    <Link on:click={() => showNavBar.set(!$showNavBar)} to="/">
-      <span class:active={window.location.pathname === '/'}>
-        Solar System</span
-      ></Link
-    >
+<nav>
+  <Link on:click={toggleNavBar} to="/">
+    <span class:active={window.location.pathname === '/'}>
+      Solar System</span
+    ></Link
+  >
 
-    {#each classifications as classification}
+  {#each classifications as classification}
+    <div>
       <h4>{classification}</h4>
 
       {#each completedCelestialObjects as object}
         {#if classification === object.classification}
-          <Link
-            on:click={() => showNavBar.set(!$showNavBar)}
-            to={`/${object.name}`}
-          >
+          <Link on:click={toggleNavBar} to={`/${object.name}`}>
             <span
               class:active={window.location.pathname.slice(1) === object.name}
             >
@@ -63,10 +45,7 @@
         {#if object.childObjects.length > 0}
           {#each object.childObjects as additionalObject}
             {#if classification === additionalObject.classification}
-              <Link
-                on:click={() => showNavBar.set(!$showNavBar)}
-                to={`/${additionalObject.name}`}
-              >
+              <Link on:click={toggleNavBar} to={`/${additionalObject.name}`}>
                 <span
                   class:active={window.location.pathname.slice(1) ===
                     additionalObject.name}
@@ -78,30 +57,25 @@
           {/each}
         {/if}
       {/each}
-    {/each}
-  </nav>
-</aside>
+    </div>
+  {/each}
+</nav>
 
 <style>
-  aside {
-    display: flex;
-    flex-direction: column;
-    left: 0;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-  }
-
-  header {
-    justify-content: flex-start;
-  }
-
   nav {
     display: flex;
-    flex-direction: column;
+    flex-direction: var(--nav-direction);
+    align-items: baseline;
     padding: 1.25rem 2rem;
+    justify-content: space-evenly;
+  }
+
+  div {
+    display: flex;
+    flex-direction: var(--div-direction);
   }
 
   .active {
-    color: #fec260;
+    color: var(--activeLink);
   }
 </style>

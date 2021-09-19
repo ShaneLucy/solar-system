@@ -38,3 +38,5 @@ export interface PreparedOject {
   dTheta: number;
   startX: number;
 }
+
+export type NavDirection = 'column' | 'row';

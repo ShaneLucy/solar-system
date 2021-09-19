@@ -9,7 +9,7 @@
 
   import { fade } from 'svelte/transition';
   import AdditionalLoadingScreen from './components/AdditionalLoadingScreen.svelte';
-  import Nav from './components/Nav.svelte';
+  import NavWrapper from './components/NavWrapper.svelte';
 </script>
 
 {#if $initialSceneGenerated}
@@ -29,7 +29,7 @@
       /></svg
     >
   {:else}
-    <Nav />
+    <NavWrapper />
   {/if}
 {/if}
 

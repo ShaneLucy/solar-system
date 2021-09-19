@@ -7,7 +7,7 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.setPath('assets/models/');
 
 const cubeLoader = new CubeTextureLoader();
-cubeLoader.setPath('assets/backgrounds/');
+cubeLoader.setPath('assets/images/backgrounds/');
 
 const totalPercent = 100;
 

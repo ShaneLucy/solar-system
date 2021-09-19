@@ -38,30 +38,28 @@
   <div class="content">
     <label for="total"
       >Generating Remainder {(
-        ($loadedObjects.length / totalProgressMax) *
+        ($loadedObjects / totalProgressMax) *
         100
       ).toFixed(0)}%</label
     >
-    <progress id="total" max={totalProgressMax} value={$loadedObjects.length}
-      >{(($loadedObjects.length / totalProgressMax) * 100).toFixed(
-        0
-      )}%</progress
+    <progress id="total" max={totalProgressMax} value={$loadedObjects}
+      >{(($loadedObjects / totalProgressMax) * 100).toFixed(0)}%</progress
     >
 
     <ol>
       {#each $objectsToLoad as objectToLoad, index}
         <li>
-          {#if $loadedObjects.length === 0 && index === 0}
+          {#if $loadedObjects === 0 && index === 0}
             <label for={objectToLoad}>{objectToLoad} {$loadingPercent}%</label>
             <progress id={objectToLoad} value={$loadingPercent} max="100"
               >{$loadingPercent}</progress
             >
-          {:else if index < $loadedObjects.length}
+          {:else if index < $loadedObjects}
             <label for={objectToLoad}>{objectToLoad} 100%</label>
             <progress id={objectToLoad} value="100" max="100"
               >{$loadingPercent}</progress
             >
-          {:else if index === $loadedObjects.length}
+          {:else if index === $loadedObjects}
             <label for={objectToLoad}>{objectToLoad} {$loadingPercent}%</label>
             <progress id={objectToLoad} value={$loadingPercent} max="100"
               >{$loadingPercent}</progress

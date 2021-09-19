@@ -9,8 +9,9 @@ gltfLoader.setPath('assets/models/');
 const cubeLoader = new CubeTextureLoader();
 cubeLoader.setPath('assets/backgrounds/');
 
+const totalPercent = 100;
+
 export const loadModel = async (name: string): Promise<GLTF> => {
-  const totalPercent = 100;
   const model = await gltfLoader.loadAsync(`${name}.glb`, (xhr) => {
     loadingPercent.set(Math.round((xhr.loaded / xhr.total) * totalPercent));
   });

@@ -11,7 +11,7 @@ export const loadingStatus = writable<boolean>(true);
 export const loadingMessage = writable<string>('Downloading Textures');
 
 export const additionalLoadingComplete = writable<boolean>(true);
-export const loadedObjects = writable<Array<string>>([]);
+export const loadedObjects = writable<number>(0);
 export const objectsToLoad = writable<Array<string>>([]);
 
 export const showAdditionalLoader = writable<boolean>(false);

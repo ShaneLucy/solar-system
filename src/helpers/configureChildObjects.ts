@@ -41,8 +41,8 @@ const setObjectsToLoad = (
   );
 };
 
-const setLoadedObjects = (name: string): void => {
-  loadedObjects.update((val) => [...val, name]);
+const incrementLoadedObjects = (): void => {
+  loadedObjects.update((val) => val + 1);
 };
 
 const hideLoader = (): void => {
@@ -50,7 +50,7 @@ const hideLoader = (): void => {
   additionalLoadingComplete.set(true);
 
   setTimeout(() => {
-    loadedObjects.set([]);
+    loadedObjects.set(0);
     objectsToLoad.set([]);
   }, transitionDuation);
 };
@@ -75,6 +75,7 @@ const generatePreparedObject = async (
     startX: object.distanceFromPrimary + parentRadius
   };
 
+  incrementLoadedObjects();
   return preparedObject;
 };
 
@@ -89,8 +90,6 @@ export default async (
       async (object): Promise<PreparedOject> => {
         const preparedObject = generatePreparedObject(object, parentRadius);
 
-        setLoadedObjects(object.name);
-
         if ('childObjects' in object) {
           object.childObjects.map(
             async (additionalObject): Promise<PreparedOject> => {
@@ -98,8 +97,6 @@ export default async (
                 additionalObject,
                 parentRadius
               );
-
-              setLoadedObjects(additionalObject.name);
 
               return preparedChildObjects;
             }

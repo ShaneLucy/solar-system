@@ -30,7 +30,10 @@
       name={completedCelestialObjects[0].name}
       isSolarSystem={true}
       radius={completedCelestialObjects[0].radius}
-      childObjects={completedCelestialObjects}
+      childObjects={completedCelestialObjects.slice(
+        1,
+        completedCelestialObjects.length
+      )}
       classification={completedCelestialObjects[0].classification}
     />
   </Route>

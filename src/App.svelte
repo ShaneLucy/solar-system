@@ -3,12 +3,10 @@
   import CelestialObjectGenerator from './views/CelestialObjectGenerator.svelte';
   import E404 from './components/E404.svelte';
   import { completedCelestialObjects } from './scene-config';
-  import { setBackgroundTexture, setHeaders } from './helpers';
+  import { setBackgroundTexture } from './helpers';
   import { onMount } from 'svelte';
 
   export let url = '';
-
-  setHeaders();
 
   onMount(() => {
     setBackgroundTexture();

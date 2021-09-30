@@ -1,4 +1,4 @@
 .eslintrc.js
 rollup.config.js
-public/**
+public/build/**
 node_modules/**

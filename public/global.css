@@ -1,73 +1,72 @@
 :root {
-	--primary: #171717;
-	--secondary: #EDEDED;
-	--tertiary: #ff0040;
-	--activeLink: #FEC260;
+  --primary: #171717;
+  --secondary: #ededed;
+  --tertiary: #ff0040;
+  --activeLink: #fec260;
 }
 
 html,
 body {
-	position: relative;
-	width: 100%;
-	height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-		'Helvetica Neue', sans-serif;
-	overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
 }
 
 a {
-	color: var(--secondary);	
-	text-decoration: none;
-	text-transform: capitalize;
+  color: var(--secondary);
+  text-decoration: none;
+  text-transform: capitalize;
 }
 
 a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 a:visited {
-	opacity: 50;
+  opacity: 50;
 }
 
 label {
-	display: block;
+  display: block;
 }
 
 canvas {
-	top: 0;
-	left: 0;
-	position: fixed;
+  top: 0;
+  left: 0;
+  position: fixed;
 }
 
 svg {
-	width: 2.5rem;
-	height: 2.5rem;
-	padding-top: 0.45rem;
-	cursor: pointer;
-	color: var(--secondary);	
+  width: 2.5rem;
+  height: 2.5rem;
+  padding-top: 0.45rem;
+  cursor: pointer;
+  color: var(--secondary);
 }
 
 aside {
-	position: absolute;
-	z-index: 700;
-	width: max-content;
-	height: max-content;
-	background-color: var(--primary);
-	color: var(--secondary);
+  position: absolute;
+  z-index: 700;
+  width: max-content;
+  height: max-content;
+  background-color: var(--primary);
+  color: var(--secondary);
 }
 
 header {
-	display: flex;
-	align-items: center;
-	
+  display: flex;
+  align-items: center;
 }
 
 h4 {
-	margin-bottom: 0;
-	color: var(--tertiary);
+  margin-bottom: 0;
+  color: var(--tertiary);
 }
